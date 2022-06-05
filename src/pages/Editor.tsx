@@ -41,6 +41,12 @@ const Editor = () => {
   const handleWriteAction = async() => {
     let valueArray = value.split("\n");
     valueArray  = flatten(valueArray.map(line => !line ? ' ' : line.replace(/(.{89})/g, "$1\n").split("\n")));
+
+    if (valueArray.length > 31) {
+      setMiningStatusMsg(`Max 31 Lines is allowed`)
+      return;
+    }
+
     const { nftContract }: TSignContact = await getSignContract()
     let nftTx = await nftContract.typewrite(Number(currentTokenId),pageName, valueArray)
     setMiningStatusMsg(`Writing to blockchain....`)
