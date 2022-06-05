@@ -175,7 +175,7 @@ export const Landing = () => {
         <SubText>{miningStatusMsg}</SubText>
         {miningStatus && (
           <Button
-            text='Mint'/>
+            value='Mint'/>
           )
         }
         <MintedText>x #/ 10,000</MintedText>
