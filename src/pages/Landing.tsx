@@ -30,10 +30,6 @@ export const Landing = () => {
   const [currentToken, setToken] = useState('')
   const { account } = useEthers();
 
-  console.log({loadingState})
-  console.log({miningStatus})
-  console.log({txError})
-
   // Checks if wallet is connected
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
