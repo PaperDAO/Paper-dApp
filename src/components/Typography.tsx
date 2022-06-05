@@ -60,6 +60,12 @@ export const ErrorText = styled.div`
   background-color: #f5d0f3;
   padding: 4px 6px;
 `
+export const ResultTxt = styled.div`
+  color: white;
+  font-size: 18px;
+  background-color: #d2fce7;
+  padding: 4px 6px;
+`
 export const Text = styled.div`
   color: ${mainColor};
   font-size: 40px;
