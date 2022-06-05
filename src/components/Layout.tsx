@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import {ReactNode, useContext} from 'react';
 import {
   Box,
   Flex,
@@ -7,12 +7,17 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { Link as ReachLink } from "react-router-dom"
+import {AppContext} from "../Router";
 
 type Props = {
   children?: ReactNode;
 };
 
 export default function Layout({ children }: Props) {
+
+    const {userPapers} = useContext(AppContext);
+
+    const bgColor =useColorModeValue('gray.100', 'gray.400');
   return (
     <div>
        <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -29,31 +34,31 @@ export default function Layout({ children }: Props) {
                 rounded={'md'}
                 _hover={{
                   textDecoration: 'none',
-                  bg: useColorModeValue('gray.100', 'gray.400'),
+                  bg: bgColor,
                 }}
                 as={ReachLink}
                 to='/'>
                   Mint
               </Link>
-              <Link
+                {(userPapers?.length) && (<Link
                 px={2}
                 py={1}
                 rounded={'md'}
                 _hover={{
                   textDecoration: 'none',
-                  bg: useColorModeValue('gray.100', 'gray.400'),
+                  bg: bgColor,
                 }}
                 as={ReachLink}
                 to='/editor'>
-                  Editor
-              </Link>
+                Editor
+              </Link>) }
               <Link
                 px={2}
                 py={1}
                 rounded={'md'}
                 _hover={{
                   textDecoration: 'none',
-                  bg: useColorModeValue('gray.100', 'gray.400'),
+                  bg: bgColor,
                 }}
                 as={ReachLink}
                 to='/collection'>

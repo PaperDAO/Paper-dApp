@@ -40,10 +40,37 @@ const getConnectedAccount = async () => {
     }
 }
 
+interface Paper {
+    id: string
+    papaer :string
+    isEdited: boolean
+}
+
+interface AppData {
+        numMinted: number;
+        numEdited: number;
+
+}
+interface AppContext {
+    userPapers: Paper[] | undefined
+    refetchUserPapers: () => void
+    appData: AppData | undefined
+    refetchAppData: () => void
+}
+export const AppContext = React.createContext<AppContext>({
+    userPapers: [],
+    refetchUserPapers: () => {},
+    appData: {
+        numEdited: 0,
+        numMinted: 0
+    },
+    refetchAppData: () => {}
+});
+
+
 const AppRoutes: any = () => {
 
-
-    const {data: userPapers, isLoading} =  useQuery('getUserAssets', async  () => {
+    const {data: userPapers, refetch: refetchUserPapers} =  useQuery<Paper[]>('getUserAssets', async  () => {
         const user =await getConnectedAccount();
         const res = await request(
             "https://api.thegraph.com/subgraphs/name/paperdao/whitepaper",
@@ -52,6 +79,7 @@ const AppRoutes: any = () => {
                   whitepapers(where:{owner: $user}) {
                       id
                       paper
+                      isEdited
                   }
                 }`,
             {
@@ -59,7 +87,57 @@ const AppRoutes: any = () => {
             },);
         return res.whitepapers;
     })
+    const {data: appData, refetch: refetchAppData} =  useQuery<AppData>('getAppData', async  () => {
+        const res = await request(
+            "https://api.thegraph.com/subgraphs/name/paperdao/whitepaper",
+            gql`
+                query {
+                    appData(id: "app") {
+                       numMinted 
+                        numEdited
+                      }
+                }`,
+            );
+        return res?.appData || {numEdited: 0, numMinted:0};
+
+    })
+
+    // const {data: allPapers, isLoading: allPapersLoading, refetch: refetchAllPapers} =  useQuery('allWhitepapers', async  () => {
+    //     let papers: Paper[] = [];
+    //     let skip = 0;
+    //     let done = false
+    //     do {
+    //         const res = await request(
+    //             "https://api.thegraph.com/subgraphs/name/paperdao/whitepaper",
+    //             gql`
+    //             query ($first: Int, $skip: Int) {
+    //               whitepapers(first: $first, skip: $skip) {
+    //                   id
+    //                   paper
+    //               }
+    //             }`,
+    //             {
+    //                 first: 1000,
+    //                 skip
+    //             });
+    //
+    //         if (res?.whitepapers?.length) {
+    //             papers = [...papers, ...res.whitepapers];
+    //             skip = res?.whitepapers?.length;
+    //         }
+    //         else {
+    //             done = true
+    //         }
+    //     } while (!done);
+    //
+    //     return papers;
+    //
+    //
+    // })
+
+
     return (
+<<<<<<< HEAD
          <Router>
           <Routes>
           <Route
@@ -73,6 +151,26 @@ const AppRoutes: any = () => {
               element={<Collection />} />
         </Routes>
       </Router>
+=======
+        <AppContext.Provider value={{userPapers: userPapers, refetchUserPapers, appData, refetchAppData}}>
+                 <Router>
+                  <Routes>
+                  <Route
+                      path="/"
+                      element={<Landing />} />
+                  <Route
+                      path="/editor"
+                      element={<Editor />} />
+                  <Route
+                      path="/paper"
+                      element={<Paper />} />
+                  <Route
+                      path="/market"
+                      element={<Market />} />
+                </Routes>
+              </Router>
+        </AppContext.Provider>
+>>>>>>> more logic
 
 );
 }

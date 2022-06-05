@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React from "react";
+=======
+import React from 'react';
+>>>>>>> more logic
 import AppRoutes from './Router';
 import "@fontsource/inter";
 import { QueryClient, QueryClientProvider } from "react-query";
