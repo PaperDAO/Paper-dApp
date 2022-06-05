@@ -35,6 +35,7 @@ export interface Paper {
   paper:string;
   isEdited: boolean;
   metadata: AssetMetaData;
+    paperTitle: string;
 }
 interface AppData {
   numMinted: number;
@@ -70,6 +71,7 @@ const AppRoutes: any = () => {
                       id
                       paper
                       isEdited
+                      paperTitle
                   }
                 }`,
             {

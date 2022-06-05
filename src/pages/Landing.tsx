@@ -58,7 +58,6 @@ const Landing = () => {
     const tokenId = appData?.numMinted || 0;
     let xx = Math.floor((tokenId + 1)  / confPriceInterval);
     const price = confPriceStart + (xx * confPriceStep);
-    console.log("mintPrice ", tokenId, price)
     return price;
   }, [appData])
 
@@ -69,8 +68,6 @@ const Landing = () => {
       
       if (signer) {
         const singerAddress= await signer.getAddress();
-
-        console.log(mintPrice * 10 ** 18);
 
         let nftTx = await nftContract.mint(singerAddress,  {
           value: mintPrice * 10 ** 18

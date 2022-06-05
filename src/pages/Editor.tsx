@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from "react";
 import { useState } from "react";
 import styled from 'styled-components'
-import { Box, ChakraProvider, Select } from "@chakra-ui/react";
+import {Box, ChakraProvider, Input, Select} from "@chakra-ui/react";
 import theme from "../theme";
 import Layout from "../components/Layout";
 import { Header, Text, MintedText, SubText } from '../components/Typography';
@@ -13,12 +13,11 @@ import "@fontsource/inter";
 import type { TSignContact } from '../types';
 import { AppContext, Paper } from "../Router";
 
-type EditorProps = {
-  tokenId?: string;
-};
 
-const Editor = ({ tokenId }: EditorProps) => {
+const Editor = () => {
   const [value, setValue] = useState('')
+  const [pageName, setPageName] = useState('')
+
   const [miningStatusMsg, setMiningStatusMsg] = useState('')
   const {userPapers, appData, refetchAppData, refetchUserPapers} = useContext(AppContext);
   const [currentTokenId, setCurrentTokenId] = useState<string>();
@@ -28,12 +27,16 @@ const Editor = ({ tokenId }: EditorProps) => {
     setValue(inputValue)
   }
 
+  const handlePageNameChanged = (e: any) => {
+    setPageName(e.target.value)
+  }
+
 
   const handleWriteAction = async() => {
     const valueArray = value.trim().split(" ");
     const { nftContract }: TSignContact = await getSignContract()
 
-    let nftTx = await nftContract.typewrite(Number(currentTokenId), valueArray)
+    let nftTx = await nftContract.typewrite(Number(currentTokenId),pageName, valueArray)
     setMiningStatusMsg(`Writing to blockchain....`)
     await nftTx.wait(2)
     refetchAppData()
@@ -45,7 +48,14 @@ const Editor = ({ tokenId }: EditorProps) => {
     setCurrentTokenId(event.target.value)
   }
 
-  const currentPaper =  !!userPapers?.length ? userPapers.find((paper: Paper) => paper.id === currentTokenId) : undefined;
+  useEffect(() => {
+    if (userPapers?.length === 1) {
+      setCurrentTokenId("1");
+    }
+
+  }, [userPapers]);
+
+  const currentPaper =  !!userPapers?.length ? userPapers.find((paper: Paper) => paper.id === currentTokenId?.toString()) : undefined;
 
   const RenderSvg = ({ image_data }: { image_data: string }) => {
     const buff = new Buffer(image_data);
@@ -59,8 +69,8 @@ const Editor = ({ tokenId }: EditorProps) => {
         <Header>Typewriter Paper</Header>
         <MintedText>#{appData?.numEdited || 0}/10000 written</MintedText>
 
-        <Select borderWidth="3px" width="50%" nplaceholder='Select Whitepaper you own..' onChange={handleWhitepaperSelected} value={currentTokenId}>
-          {userPapers?.length && userPapers.map(paper => <option value={paper.id}>Whitepaper #{paper.id} {paper.isEdited && "- Written"}</option>)}
+        <Select borderWidth="3px" width="50%" placeholder='Select Whitepaper you own..' onChange={handleWhitepaperSelected} value={currentTokenId}>
+          {userPapers?.length && userPapers.map(paper => <option  key={paper.id} value={paper.id}>Whitepaper #{paper.id} {!!paper.paperTitle && ` - ${paper.paperTitle}` }</option>)}
         </Select>
 
         {currentPaper?.isEdited &&
@@ -71,6 +81,22 @@ const Editor = ({ tokenId }: EditorProps) => {
 
         {currentPaper && !currentPaper.isEdited &&
           (<>
+            <Input
+                 fontSize="14px"
+                 marginTop="20px"
+                 width="40%"
+                 onChange={handlePageNameChanged}
+                                borderWidth="3px"
+                                value={pageName}
+                                _hover={{
+                                  borderColor: "blue.100",
+                                }}
+                                _active={{
+                                  borderColor: "blue.100",
+                                }}
+                                _focus={{
+                                  borderColor: "blue.100",
+                                }} placeholder={"Paper title"} />
             <Textarea
               height="500px"
               fontSize="14px"
