@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { nftContractAddress } from '../config'
 import { useEthers } from "@usedapp/core";
 import { ChakraProvider, Text as ChackraText, Box, Link } from "@chakra-ui/react";
-import Identicon from "../components/Identicon";
 import Layout from "../components/Layout";
 import ActionButton from '../components/ActionButton';
 import MarketLogos from '../components/MarketLogos';
@@ -16,7 +15,7 @@ import { Link as ReachLink } from "react-router-dom"
 import type { TSignContact } from '../types';
 
 const Landing = () => {
-  const [miningStatus, setMiningStatus] = useState(null)
+  const [miningStatus, setMiningStatus] = useState(0)
   const [miningStatusMsg, setMiningStatusMsg] = useState('')
   const [loadingState, setLoadingState] = useState(0)
   const [txError, setTxError] = useState(null)
@@ -29,19 +28,17 @@ const Landing = () => {
   // Checks if wallet is connected
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
+
     if (ethereum) {
-      console.log('Got the ethereum obejct: ', ethereum)
-    } else {
-      console.log('No Wallet found. Connect Wallet')
-    }
 
-    const accounts = await (window as any).ethereum.request({ method: 'eth_accounts' })
+    const accounts = await ethereum.request({ method: 'eth_accounts' })
 
-    if (accounts.length !== 0) {
-      console.log('Found authorized Account: ', accounts[0])
-      setCurrentAccount(accounts[0])
-    } else {
-      console.log('No authorized account found')
+      if (accounts.length !== 0) {
+        console.log('Found authorized Account: ', accounts[0])
+        setCurrentAccount(accounts[0])
+      } else {
+        console.log('No authorized account found')
+      }
     }
   }
 
@@ -54,7 +51,7 @@ const Landing = () => {
         console.log('Metamask not detected')
         return
       }
-      let chainId = await (window as any).ethereum.request({ method: 'eth_chainId'})
+      let chainId = await ethereum.request({ method: 'eth_chainId'})
       console.log('Connected to chain:' + chainId)
 
       const rinkebyChainId = '0x4'
@@ -64,7 +61,7 @@ const Landing = () => {
         return
       }
 
-      const accounts = await (window as any).ethereum.request({ method: 'eth_requestAccounts' })
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
 
       console.log('Found account', accounts[0])
       setCurrentAccount(accounts[0])
@@ -75,7 +72,7 @@ const Landing = () => {
 
   // Checks if wallet is connected to the correct network
   const checkNetwork = async () => {
-    let chainId = await (window as any).ethereum.request({ method: 'eth_chainId' })
+    let chainId = await window.ethereum.request({ method: 'eth_chainId' })
     console.log('Connected to chain:' + chainId)
 
     const rinkebyChainId = '0x4'
@@ -106,7 +103,7 @@ const Landing = () => {
         let tx = await nftTx.wait()
         setLoadingState(1)
         setMiningStatusMsg(`Mined! ${tx}`)
-        setMiningStatus(1 as any)
+        setMiningStatus(1)
         let event = tx.events[0]
         let value = event.args[2]
         let tokenId = value.toNumber()
@@ -156,7 +153,6 @@ const Landing = () => {
                   )}`
                 }
               </ChackraText>
-              <Identicon />
             </Flex>
             )
           }
@@ -164,6 +160,16 @@ const Landing = () => {
             handleAction={mintCharacter}
             text='Mint'/>
         </Flex>
+        <Text>1 White Paper per wallet</Text>
+        <Box mt={2}>
+          <SubText>
+            &nbsp;&nbsp;&nbsp;&nbsp;1 – 1000 – Free mint + gas    5001 – 6000 – 5.0 MATIC + gas<br/>
+            1001 – 2000 – 1.0 MATIC + gas    6001 – 7000 – 6.0 MATIC + gas<br/>
+            2001 – 3000 – 2.0 MATIC + gas    7001 – 8000 – 7.0 MATIC + gas <br/>
+            3001 – 4000 – 3.0 MATIC + gas    8001 – 9000 – 8.0 MATIC + gas <br/>
+            &nbsp;4001 – 5000 – 4.0 MATIC + gas    9001 – 10000 – 9.0 MATIC + gas<br/>
+          </SubText>
+        </Box>
         <SubText>{miningStatusMsg}</SubText>
         {miningStatus && (
             <Link
