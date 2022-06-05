@@ -2,9 +2,8 @@ import React from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import {
   Landing,
-  Paper,
   Editor,
-  Market,
+  Collection,
 } from './pages';
 
 const AppRoutes: any = () => (
@@ -18,7 +17,7 @@ const AppRoutes: any = () => (
         element={<Editor />} />
       <Route
         path="/collection"
-        element={<Market />} />
+        element={<Collection />} />
     </Routes>
   </Router>
 );

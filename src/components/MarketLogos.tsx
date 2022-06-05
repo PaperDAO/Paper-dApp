@@ -36,7 +36,7 @@ export default function MarketLogos({ nftContractAddress }: MarketLogosProps) {
     </Link>
     <Link
       isExternal
-      href={`https://twitter.com/home`}
+      href={`https://twitter.com/whitepaper_dao`}
     >
       <Image
         boxSize='50px'

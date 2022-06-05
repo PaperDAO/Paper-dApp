@@ -27,13 +27,9 @@ export const Editor = ({ tokenId }: EditorProps) => {
   const handleWriteAction = async() => {
     // write to the chain
     const valueArray = value.trim().split(" ");
-    console.log(valueArray)
     const { nftContract }: TSignContact = await getSignContract()
 
-    console.log({tokenId})
-    //const singerAddress= await signer.getAddress();
-    let nftTx = await nftContract.typewrite(tokenId, valueArray)
-    console.log(nftTx)
+    await nftContract.typewrite(tokenId, valueArray)
   }
 
   return (
@@ -43,7 +39,9 @@ export const Editor = ({ tokenId }: EditorProps) => {
         <MintedText>x #/10000 written</MintedText>
         <Textarea
           height="500px"
+          fontSize="14px"
           marginTop="20px"
+          width="40%"
           value={value}
           _hover={{
             borderColor: "blue.100",

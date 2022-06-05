@@ -4,10 +4,8 @@ import {
   Flex,
   HStack,
   Link,
-  IconButton,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link as ReachLink } from "react-router-dom"
 
 type Props = {
@@ -36,18 +34,6 @@ export default function Layout({ children }: Props) {
                 as={ReachLink}
                 to='/'>
                   Mint
-              </Link>
-              <Link
-                px={2}
-                py={1}
-                rounded={'md'}
-                _hover={{
-                  textDecoration: 'none',
-                  bg: useColorModeValue('gray.100', 'gray.400'),
-                }}
-                as={ReachLink}
-                to='/editor'>
-                Editor
               </Link>
               <Link
                 px={2}
