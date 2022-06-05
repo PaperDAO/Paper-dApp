@@ -16,7 +16,7 @@ import { Link as ReachLink } from "react-router-dom"
 
 import type { TSignContact } from '../types';
 
-export const Landing = () => {
+const Landing = () => {
   const [miningStatus, setMiningStatus] = useState(null)
   const [miningStatusMsg, setMiningStatusMsg] = useState('')
   const [loadingState, setLoadingState] = useState(0)
@@ -194,3 +194,5 @@ export const Landing = () => {
     </ChakraProvider>
   )
 }
+
+export default Landing;

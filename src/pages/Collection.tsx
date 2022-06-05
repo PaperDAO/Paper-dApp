@@ -11,7 +11,7 @@ const testSvgWp = `<svg width='2494' height='3523' viewBox='0 0 2494 3523' fill=
 
 const svgs = [testSvgWp, testSvgWp, testSvgWp, testSvgWp, testSvgWp, testSvgWp];
 
-export const Collection: any = () => {
+const Collection: any = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSvg, setSelectedSvg] = useState('');
 
@@ -50,3 +50,5 @@ export const Collection: any = () => {
     </ChakraProvider>
   );
 }
+
+export default Collection;

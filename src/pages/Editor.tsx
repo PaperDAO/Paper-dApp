@@ -16,7 +16,7 @@ type EditorProps = {
   tokenId?: string;
 };
 
-export const Editor = ({ tokenId }: EditorProps) => {
+const Editor = ({ tokenId }: EditorProps) => {
   const [value, setValue] = useState('')
 
   const handleInputChange = (e:any) => {
@@ -66,3 +66,5 @@ export const Editor = ({ tokenId }: EditorProps) => {
     </ChakraProvider>
   );
 }
+
+export default Editor;
