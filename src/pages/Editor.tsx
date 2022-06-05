@@ -7,12 +7,12 @@ import Layout from "../components/Layout";
 import { Header, MintedText, SubText, MintStatusText, ResultTxt } from '../components/Typography';
 import ActionButton from '../components/ActionButton';
 import { Textarea } from '@chakra-ui/react'
-import {checkCorrectNetwork, getSignContract} from "../utils";
+import { getSignContract} from "../utils";
 import "@fontsource/inter";
 import  {flatten} from 'lodash'
 import type { TSignContact } from '../types';
 import { AppContext, Paper } from "../Router";
-import {NetWorkName, nftContractAddress} from "../config";
+import {nftContractAddress} from "../config";
 import axios from "axios";
 
 const Title = styled.div`
@@ -69,7 +69,6 @@ const Editor = () => {
   const currentPaper =  !!userPapers?.length ? userPapers.find((paper: Paper) => paper.id === currentTokenId?.toString()) : undefined;
 
 
-
   const handleWriteAction = async() => {
     let valueArray = value.split("\n");
     valueArray  = flatten(valueArray.map(line => !line ? ' ' : line.replace(/(.{89})/g, "$1\n").split("\n")));
@@ -78,14 +77,6 @@ const Editor = () => {
       setMiningStatusMsg(`Max 31 Lines is allowed`)
       return;
     }
-
-    const correctNetwork = await checkCorrectNetwork()
-
-    if (!correctNetwork) {
-      setMiningStatusMsg(`Change your network to ${NetWorkName}`)
-      return;
-    }
-    setMiningStatusMsg('');
 
     const { nftContract }: TSignContact = await getSignContract()
     let nftTx = await nftContract.typewrite(Number(currentTokenId),pageName, valueArray)
