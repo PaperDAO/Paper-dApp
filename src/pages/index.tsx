@@ -1,11 +1,9 @@
-import { Landing } from './Landing';
 import { Editor } from './Editor';
-import { Market } from './Market';
-import { Paper } from './Paper';
+import { Landing } from './Landing';
+import { Collection } from './Collection';
 
 export {
-    Landing,
-    Editor,
-    Market,
-    Paper,
+  Editor,
+  Landing,
+  Collection,
 }

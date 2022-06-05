@@ -1,21 +1,18 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
-import detectEhereumProvider from '@metamask/detect-provider';
 import { nftContractAddress } from '../config'
 import { useEthers } from "@usedapp/core";
-import NFT from '../Whitepaper.json';
-import { ethers } from 'ethers'
-import { ChakraProvider, Text as ChackraText, Button } from "@chakra-ui/react";
-import { Editor } from './Editor';
+import { ChakraProvider, Text as ChackraText, Box, Link } from "@chakra-ui/react";
+import { ArrowRightIcon} from '@chakra-ui/icons'
 import Identicon from "../components/Identicon";
 import Layout from "../components/Layout";
 import ActionButton from '../components/ActionButton';
 import MarketLogos from '../components/MarketLogos';
-import { Header, Text, MintedText, SubText } from '../components/Typography';
+import { Header, Text, MintedText, SubText, LinkText } from '../components/Typography';
 import { Flex } from "@chakra-ui/react";
 import theme from "../theme";
 import { getSignContract } from '../utils';
-import styled from 'styled-components'
+import { Link as ReachLink } from "react-router-dom"
 
 import type { TSignContact } from '../types';
 
@@ -169,6 +166,28 @@ export const Landing = () => {
             text='Mint'/>
         </Flex>
         <SubText>{miningStatusMsg}</SubText>
+        {miningStatus && (
+            <Link
+              px={2}
+              py={1}
+              rounded={'md'}
+              _hover={{
+                textDecoration: 'none',
+              }}
+              as={ReachLink}
+              to='/editor'>
+              <Flex mt={3}>
+                <Box mt={2}>
+                  <LinkText>
+                    GO TO THE EDITOR
+                  </LinkText>
+                </Box>
+                <Box mt={2} ml={2}>
+                  <ArrowRightIcon w={3} h={3} color="#66aed6"  />
+                </Box>
+              </Flex>
+            </Link>
+        )}
         <MintedText>x #/ 10,000</MintedText>
         <MarketLogos nftContractAddress={nftContractAddress} />
       </Layout>
