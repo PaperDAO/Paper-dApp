@@ -175,8 +175,6 @@ export const Landing = () => {
         <SubText>{miningStatusMsg}</SubText>
         {miningStatus && (
           <Button
-
-            handleAction={mintCharacter}
             text='Mint'/>
           )
         }
