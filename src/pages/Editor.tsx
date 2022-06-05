@@ -1,17 +1,17 @@
 import React, {useContext, useEffect} from "react";
 import { useState } from "react";
 import styled from 'styled-components'
-import {Box, ChakraProvider, Select} from "@chakra-ui/react";
+import { Box, ChakraProvider, Select } from "@chakra-ui/react";
 import theme from "../theme";
 import Layout from "../components/Layout";
-import {Header, Text, MintedText, SubText} from '../components/Typography';
+import { Header, Text, MintedText, SubText } from '../components/Typography';
 import ActionButton from '../components/ActionButton';
 import { Textarea } from '@chakra-ui/react'
 import {getPaperMetadata, getSignContract} from "../utils";
 import "@fontsource/inter";
 
 import type { TSignContact } from '../types';
-import {AppContext, Paper} from "../Router";
+import { AppContext, Paper } from "../Router";
 
 type EditorProps = {
   tokenId?: string;

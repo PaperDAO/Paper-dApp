@@ -5,6 +5,7 @@ import {
   HStack,
   Link,
   useColorModeValue,
+  Text,
 } from '@chakra-ui/react';
 import { Link as ReachLink } from "react-router-dom"
 import {AppContext} from "../Router";
@@ -23,7 +24,7 @@ export default function Layout({ children }: Props) {
        <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <HStack spacing={8} alignItems={'center'}>
-            <Box>WhitePaperDao</Box>
+            <Box><Text color="gray.400" fontWeight="600">WhitePaperDao</Text></Box>
             <HStack
               as={'nav'}
               spacing={4}
@@ -38,7 +39,9 @@ export default function Layout({ children }: Props) {
                 }}
                 as={ReachLink}
                 to='/'>
-                  Mint
+                  <Text color="gray.500" fontWeight="bold">
+                    Mint
+                  </Text>
               </Link>
                 {(userPapers?.length) && (<Link
                 px={2}
@@ -50,7 +53,9 @@ export default function Layout({ children }: Props) {
                 }}
                 as={ReachLink}
                 to='/editor'>
-                Editor
+                <Text color="gray.500" fontWeight="bold">
+                  Editor
+                </Text>
               </Link>) }
               <Link
                 px={2}
@@ -62,7 +67,9 @@ export default function Layout({ children }: Props) {
                 }}
                 as={ReachLink}
                 to='/collection'>
-                  Collection
+                  <Text color="gray.500" fontWeight="bold">
+                    Collection
+                  </Text>
               </Link>
             </HStack>
           </HStack>
@@ -73,6 +80,7 @@ export default function Layout({ children }: Props) {
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
+        paddingBottom="50px"
         // h="100vh"
       >
       {children}

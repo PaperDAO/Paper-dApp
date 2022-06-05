@@ -2,11 +2,18 @@ import React, {useContext} from 'react';
 import { useState } from 'react'
 import { nftContractAddress } from '../config'
 import { useEthers } from "@usedapp/core";
-import { ChakraProvider, Text as ChackraText, Button,  Box, Link  } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  Text as ChackraText,
+  Button,
+  Box,
+  Link,
+  SimpleGrid,
+} from "@chakra-ui/react";
 import Layout from "../components/Layout";
 import ActionButton from '../components/ActionButton';
 import MarketLogos from '../components/MarketLogos';
-import { Header, Text, MintedText, SubText, LinkText } from '../components/Typography';
+import {Header, Text, MintedText, SubText, LinkText, MintStatusText } from '../components/Typography';
 import { Flex } from "@chakra-ui/react";
 import theme from "../theme";
 import { getSignContract } from '../utils';
@@ -68,9 +75,9 @@ const Landing = () => {
 
         refetchUserPapers();
         refetchAppData();
-        setMiningStatusMsg(
-          `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTx.hash}`
-        )
+        setMiningStatusMsg('')
+        // `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTx.hash}`
+
       } else {
         console.log("Ethereum object doesn't exist!")
       }
@@ -91,7 +98,7 @@ const Landing = () => {
           White Paper DAO
         </Header>
         <MintedText>#{appData?.numMinted || 0}/ 10,000</MintedText>
-        <Flex>
+        <Flex paddingBottom="30px">
           {!account ? (
             <ActionButton
               handleAction={connectWallet}
@@ -101,7 +108,7 @@ const Landing = () => {
             <Flex
               marginTop="65px"
               marginRight="40px">
-              <ChackraText color="gray.300" marginRight="5px">
+              <ChackraText color="gray.400" marginRight="5px">
                 {account &&
                   `${account.slice(0, 6)}...${account.slice(
                     account.length - 4,
@@ -119,21 +126,30 @@ const Landing = () => {
             text='Mint'/>}
         </Flex>
 
-        <Text>
-          One free mint + Gas <br/>
-          Per wallet
-        </Text>
         <SubText>No trees were harmed in the minting of this paper</SubText>
-        <Box mt={2}>
-          <SubText>
-            &nbsp;&nbsp;&nbsp;&nbsp;1 – 1000 – Free mint + gas    5001 – 6000 – 5.0 MATIC + gas<br/>
-            1001 – 2000 – 1.0 MATIC + gas    6001 – 7000 – 6.0 MATIC + gas<br/>
-            2001 – 3000 – 2.0 MATIC + gas    7001 – 8000 – 7.0 MATIC + gas <br/>
-            3001 – 4000 – 3.0 MATIC + gas    8001 – 9000 – 8.0 MATIC + gas <br/>
-            &nbsp;4001 – 5000 – 4.0 MATIC + gas    9001 – 10000 – 9.0 MATIC + gas<br/>
-          </SubText>
+        <Box mt={4}>
+          <SimpleGrid columns={2} gap={10}>
+            <Box pr={5}>
+              <SubText>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 – 1000 – Free mint + gas<br/>
+                1001 – 2000 – 1.0 MATIC + gas<br/>
+                2001 – 3000 – 2.0 MATIC + gas<br/>
+                3001 – 4000 – 3.0 MATIC + gas<br/>
+                &nbsp;4001 – 5000 – 4.0 MATIC + gas<br/>
+              </SubText>
+            </Box>
+            <Box pl={5}>
+              <SubText>
+                5001 – 6000 – 5.0 MATIC + gas<br/>
+                6001 – 7000 – 6.0 MATIC + gas<br/>
+                7001 – 8000 – 7.0 MATIC + gas<br/>
+                8001 – 9000 – 8.0 MATIC + gas<br/>
+                &nbsp;9001 – 10000 – 9.0 MATIC + gas<br/>
+              </SubText>
+            </Box>
+          </SimpleGrid>
         </Box>
-        {miningStatusMsg && <SubText>{miningStatusMsg}</SubText>}
+        {miningStatusMsg && <MintStatusText>{miningStatusMsg}</MintStatusText>}
         {!!miningStatus && (
             <Link
               px={2}
@@ -147,7 +163,7 @@ const Landing = () => {
               <Flex mt={3}>
                 <Box mt={2}>
                   <LinkText>
-                    GO TO THE EDITOR
+                    CONGRATS! NOW YOU CAN TYPE ON YOUR WHITE PAPER {'>'}{'>'}
                   </LinkText>
                 </Box>
               </Flex>
