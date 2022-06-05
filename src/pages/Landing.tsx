@@ -2,31 +2,17 @@ import React from 'react';
 import { useState, useEffect } from 'react'
 import detectEhereumProvider from '@metamask/detect-provider';
 import { nftContractAddress } from '../config'
+import NFT from '../Whitepaper.json';
 import { ethers } from 'ethers'
 import axios from 'axios'
 import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "../components/Layout";
 import ActionButton from '../components/ActionButton';
 import MarketLogos from '../components/MarketLogos';
+import { Header, Text, MintedText } from '../components/Typography';
 import { Button, Flex } from "@chakra-ui/react";
 import theme from "../theme";
 import styled from 'styled-components'
-
-const Text = styled.div`
-  color: #edf0f0;
-  font-size: 40px;
-  text-align: center;
-`
-const Header = styled.div`
-  color: #edf0f0;
-  font-size: 70px;
-  font-weight: 700;
-  text-align: center;
-`
-
-const MintedText = styled(Text)`
-  margin-top: 20px;
-`
 
 export const Landing = () => {
   const [mintedNFT, setMintedNFT] = useState(null)
@@ -114,7 +100,7 @@ export const Landing = () => {
         const signer = provider.getSigner()
         const nftContract = new ethers.Contract(
           nftContractAddress,
-          'NFT.abi', // TODO
+          NFT.abi,
           signer
         )
 
@@ -151,7 +137,7 @@ export const Landing = () => {
         const signer = provider.getSigner()
         const nftContract = new ethers.Contract(
           nftContractAddress,
-          'NFT.abi', // TODO
+          NFT.abi,
           signer
         )
 
