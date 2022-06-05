@@ -74,21 +74,25 @@ const Collection: any = () => {
   };
   
   const renderSvgs = () => {
+    const images:any = [];
+    allPapers?.forEach((item:{metadata:any,owner:string,paperTitle:string}, index:any) => {
+      if (item?.metadata.image_data) {
+        const buff = new Buffer(item?.metadata.image_data);
+        const base64data = buff.toString('base64');
+
+        images.push(
+          <Box key={index} w='200px' onClick={() => onModalOpen(item, base64data)}>
+            <SubTextLfSm>{sliceAccount(item.owner)}</SubTextLfSm>
+            <SubTextLfSm>{item?.paperTitle || "no title"}</SubTextLfSm>
+            <img src={`data:image/svg+xml;base64,${base64data}`} />
+          </Box>
+        )
+      }
+    })
+
     return (
       <SimpleGrid columns={4} gap={8}>
-        {allPapers?.map((item:{metadata:any,owner:string,paperTitle:string}, index:any) => {
-          const buff = new Buffer(item?.metadata.image_data);
-          const base64data = buff.toString('base64');
-          console.log(item?.paperTitle)
-          console.log("--")
-          return (
-            <Box key={index} w='200px' onClick={() => onModalOpen(item, base64data)}>
-              <SubTextLfSm>{sliceAccount(item.owner)}</SubTextLfSm>
-              <SubTextLfSm>{item?.paperTitle || "no title"}</SubTextLfSm>
-              <img src={`data:image/svg+xml;base64,${base64data}`} />
-            </Box>
-          )
-        })}
+        {images}
       </SimpleGrid>
     )
   }
