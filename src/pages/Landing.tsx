@@ -12,7 +12,15 @@ import {
 import Layout from "../components/Layout";
 import ActionButton from '../components/ActionButton';
 import MarketLogos from '../components/MarketLogos';
-import { Header, Text, MintedText, SubText, LinkText, MintStatusText } from '../components/Typography';
+import {
+  Header,
+  Text,
+  MintedText,
+  SubText,
+  LinkText,
+  MintStatusText,
+  ErrorText
+} from '../components/Typography';
 import { Flex } from "@chakra-ui/react";
 import theme from "../theme";
 import { getSignContract } from '../utils';
@@ -28,18 +36,37 @@ const Landing = () => {
   const [miningStatus, setMiningStatus] = useState(0)
   const [miningStatusMsg, setMiningStatusMsg] = useState('')
   const [loadingState, setLoadingState] = useState(0)
+  const [correctNetworkMsg, setCorrectNetworkMsg] = useState('')
   const [txError] = useState(null)
   const { account } = useEthers();
 
   const { refetchUserPapers, appData, refetchAppData } = useContext(AppContext);
 
 
+  	// Checks if wallet is connected to the correct network
+	const checkCorrectNetwork = async () => {
+		const { ethereum } = window
+		let chainId = await ethereum.request({ method: 'eth_chainId' })
+		console.log('Connected to chain:' + chainId)
+
+		const polygonChainId = '0x89'
+
+		return chainId === polygonChainId;
+	}
+
   // Calls Metamask to connect wallet on clicking Connect Wallet button
   const connectWallet = async () => {
+    setCorrectNetworkMsg('')
+
     try {
       const provider: any = await detectEthereumProvider();
+      const correctNetwork = await checkCorrectNetwork()
 
-      if (provider) {
+      if (!correctNetwork) {
+        setCorrectNetworkMsg("Change your network to Polygon")
+      }
+
+      else if (provider) {
         const ethProvider =  new ethers.providers.Web3Provider(provider)
         await ethProvider.send("eth_requestAccounts", []);
 
@@ -47,7 +74,7 @@ const Landing = () => {
         window.location.reload();
       }
     } catch (error) {
-      console.log('Error connecting to metamask', error)
+      setCorrectNetworkMsg(`Error connecting to metamask ${error.message}`)
     }
   }
 
@@ -107,11 +134,14 @@ const Landing = () => {
           White Paper DAO
         </Header>
         <MintedText>#{appData?.numMinted || 0}/ 10,000</MintedText>
+        {!!correctNetworkMsg && (<ErrorText>{correctNetworkMsg}</ErrorText>)}
         <Flex paddingBottom="30px">
           {!account ? (
-            <ActionButton
-              handleAction={connectWallet}
-              text='Connect your Wallet'/>
+            <>
+              <ActionButton
+                handleAction={connectWallet}
+                text='Connect your Wallet'/>
+            </>
             ) : 
             (
             <Flex
