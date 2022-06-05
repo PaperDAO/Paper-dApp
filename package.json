@@ -35,7 +35,8 @@
     "@ethersproject/contracts": "5.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "next start",
+    "dev": "next dev",
     "build": "next build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
