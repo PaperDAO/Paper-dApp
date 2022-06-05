@@ -1,10 +1,8 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-import {
-  Landing,
-  Editor,
-  Collection,
-} from './pages';
+import Landing from './Landing';
+import  Editor from './Editor';
+import Collection from './Collection';
 
 const AppRoutes: any = () => (
   <Router>
