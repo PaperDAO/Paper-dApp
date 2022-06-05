@@ -17,10 +17,7 @@ const AppRoutes: any = () => (
         path="/editor"
         element={<Editor />} />
       <Route
-        path="/paper"
-        element={<Paper />} />
-      <Route
-        path="/market"
+        path="/collection"
         element={<Market />} />
     </Routes>
   </Router>

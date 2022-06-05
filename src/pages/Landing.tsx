@@ -5,7 +5,7 @@ import { nftContractAddress } from '../config'
 import { useEthers } from "@usedapp/core";
 import NFT from '../Whitepaper.json';
 import { ethers } from 'ethers'
-import { ChakraProvider, Text as ChackraText } from "@chakra-ui/react";
+import { ChakraProvider, Text as ChackraText, Button } from "@chakra-ui/react";
 import { Editor } from './Editor';
 import Identicon from "../components/Identicon";
 import Layout from "../components/Layout";
@@ -26,6 +26,8 @@ export const Landing = () => {
   const [txError, setTxError] = useState(null)
   const [currentAccount, setCurrentAccount] = useState('')
   const [network, setNetwork] = useState(0)
+  const [showEditor, setShowEditor] = useState(true)
+  const [currentToken, setToken] = useState('')
   const { account } = useEthers();
 
   console.log({loadingState})
@@ -116,7 +118,7 @@ export const Landing = () => {
         let event = tx.events[0]
         let value = event.args[2]
         let tokenId = value.toNumber()
-
+        setToken(tokenId)
         setMiningStatusMsg(
           `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTx.hash}`
         )
@@ -171,9 +173,15 @@ export const Landing = () => {
             text='Mint'/>
         </Flex>
         <SubText>{miningStatusMsg}</SubText>
+        {miningStatus && (
+          <Button
+
+            handleAction={mintCharacter}
+            text='Mint'/>
+          )
+        }
         <MintedText>x #/ 10,000</MintedText>
         <MarketLogos nftContractAddress={nftContractAddress} />
-        {true && (<Editor />)}
       </Layout>
     </ChakraProvider>
   )
