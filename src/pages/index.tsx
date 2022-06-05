@@ -1,4 +1,11 @@
-export * from './Editor';
-export * from './Landing';
-export * from './Market';
-export * from './Paper';
+import { Landing } from './Landing';
+import { Editor } from './Editor';
+import { Market } from './Market';
+import { Paper } from './Paper';
+
+export {
+    Landing,
+    Editor,
+    Market,
+    Paper,
+}
