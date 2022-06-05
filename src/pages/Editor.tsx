@@ -33,7 +33,7 @@ const Editor = () => {
 
 
   const handleWriteAction = async() => {
-    const valueArray = value.trim().split(" ");
+    const valueArray = value.split("\n");
     const { nftContract }: TSignContact = await getSignContract()
 
     let nftTx = await nftContract.typewrite(Number(currentTokenId),pageName, valueArray)
@@ -56,6 +56,8 @@ const Editor = () => {
   }, [userPapers]);
 
   const currentPaper =  !!userPapers?.length ? userPapers.find((paper: Paper) => paper.id === currentTokenId?.toString()) : undefined;
+
+  console.log(currentPaper);
 
   const RenderSvg = ({ image_data }: { image_data: string }) => {
     const buff = new Buffer(image_data);
