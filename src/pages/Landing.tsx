@@ -2,30 +2,36 @@ import React from 'react';
 import { useState, useEffect } from 'react'
 import detectEhereumProvider from '@metamask/detect-provider';
 import { nftContractAddress } from '../config'
+import { useEthers } from "@usedapp/core";
 import NFT from '../Whitepaper.json';
 import { ethers } from 'ethers'
-import axios from 'axios'
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Text as ChackraText } from "@chakra-ui/react";
+import { Editor } from './Editor';
+import Identicon from "../components/Identicon";
 import Layout from "../components/Layout";
 import ActionButton from '../components/ActionButton';
 import MarketLogos from '../components/MarketLogos';
-import { Header, Text, MintedText } from '../components/Typography';
-import { Button, Flex } from "@chakra-ui/react";
+import { Header, Text, MintedText, SubText } from '../components/Typography';
+import { Flex } from "@chakra-ui/react";
 import theme from "../theme";
+import { getSignContract } from '../utils';
 import styled from 'styled-components'
 
+import type { TSignContact } from '../types';
+
 export const Landing = () => {
-  const [mintedNFT, setMintedNFT] = useState(null)
   const [miningStatus, setMiningStatus] = useState(null)
+  const [miningStatusMsg, setMiningStatusMsg] = useState('')
   const [loadingState, setLoadingState] = useState(0)
   const [txError, setTxError] = useState(null)
   const [currentAccount, setCurrentAccount] = useState('')
-  const [correctNetwork, setCorrectNetwork] = useState(false)
+  const [network, setNetwork] = useState(0)
+  const { account } = useEthers();
 
-  async function getEtherProvider(){
-    const provider  = await detectEhereumProvider();
-    return new ethers.providers.Web3Provider(provider as any)
-  }
+  console.log({loadingState})
+  console.log({miningStatus})
+  console.log({txError})
+
   // Checks if wallet is connected
   const checkIfWalletIsConnected = async () => {
     const { ethereum } = window;
@@ -74,84 +80,51 @@ export const Landing = () => {
   }
 
   // Checks if wallet is connected to the correct network
-  const checkCorrectNetwork = async () => {
+  const checkNetwork = async () => {
     let chainId = await (window as any).ethereum.request({ method: 'eth_chainId' })
     console.log('Connected to chain:' + chainId)
 
     const rinkebyChainId = '0x4'
 
     if (chainId !== rinkebyChainId) {
-      setCorrectNetwork(false)
+      setNetwork(1)
     } else {
-      setCorrectNetwork(true)
+      setNetwork(2)
     }
   }
 
   useEffect(() => {
     checkIfWalletIsConnected()
-    checkCorrectNetwork()
+    checkNetwork()
   }, [])
 
   // Creates transaction to mint NFT on clicking Mint Character button
   const mintCharacter = async () => {
     try {
-        const provider = await getEtherProvider()
-      if (provider) {
-        const signer = provider.getSigner()
-        const nftContract = new ethers.Contract(
-          nftContractAddress,
-          NFT.abi,
-          signer
-        )
-
-        let nftTx = await nftContract.createknft()
-        console.log('Mining....', nftTx.hash)
-        setMiningStatus(0 as any)
+      const { signer, nftContract }: TSignContact = await getSignContract()
+      
+      if (signer) {
+        const singerAddress= await signer.getAddress();
+        let nftTx = await nftContract.mint(singerAddress)
+        setMiningStatusMsg(`Mining.... ${nftTx.hash}`)
+  
 
         let tx = await nftTx.wait()
         setLoadingState(1)
-        console.log('Mined!', tx)
+        setMiningStatusMsg(`Mined! ${tx}`)
+        setMiningStatus(1 as any)
         let event = tx.events[0]
         let value = event.args[2]
         let tokenId = value.toNumber()
 
-        console.log(
+        setMiningStatusMsg(
           `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTx.hash}`
         )
-
-        getMintedNFT(tokenId)
       } else {
         console.log("Ethereum object doesn't exist!")
       }
     } catch (error) {
       console.log('Error minting character', error)
-      // setTxError(error.message)
-    }
-  }
-
-  // Gets the minted NFT data
-  const getMintedNFT = async (tokenId:any) => {
-    try {
-      const provider = await getEtherProvider()
-      if (provider) {
-        const signer = provider.getSigner()
-        const nftContract = new ethers.Contract(
-          nftContractAddress,
-          NFT.abi,
-          signer
-        )
-
-        let tokenUri = await nftContract.tokenURI(tokenId)
-        let data = await axios.get(tokenUri)
-        let meta = data.data
-
-        setMiningStatus(1 as any)
-        setMintedNFT(meta.image)
-      } else {
-        console.log("Ethereum object doesn't exist!")
-      }
-    } catch (error) {
-      console.log(error)
       // setTxError(error.message)
     }
   }
@@ -170,42 +143,37 @@ export const Landing = () => {
           One free mint + Gas <br/>
           Per wallet
         </Text>
+        <SubText>No trees were harmed in the minting of this paper</SubText>
         <Flex>
-          <ActionButton
-            handleAction={connectWallet}
-            text='Connect your Wallet'/>
+          {!account ? (
+            <ActionButton
+              handleAction={connectWallet}
+              text='Connect your Wallet'/>
+            ) : 
+            (
+            <Flex
+              marginTop="65px"
+              marginRight="40px">
+              <ChackraText color="gray.300" marginRight="5px">
+                {account &&
+                  `${account.slice(0, 6)}...${account.slice(
+                    account.length - 4,
+                    account.length
+                  )}`
+                }
+              </ChackraText>
+              <Identicon />
+            </Flex>
+            )
+          }
           <ActionButton
             handleAction={mintCharacter}
             text='Mint'/>
         </Flex>
+        <SubText>{miningStatusMsg}</SubText>
         <MintedText>x #/ 10,000</MintedText>
         <MarketLogos nftContractAddress={nftContractAddress} />
-        {loadingState === 0 ? (
-          miningStatus === 0 ? (
-            txError === null ? (
-              <div>
-                <Text>
-                  Processing your transaction
-                </Text>
-
-              </div>
-            ) : (
-              <div>{txError}</div>
-            )
-          ) : (
-            <div></div>
-          )
-        ) : (
-          <div>
-            <Text>
-              Your Eternal Domain Character
-            </Text>
-            <img
-              src={mintedNFT as any}
-              alt=''
-            />
-          </div>
-      )}
+        {true && (<Editor />)}
       </Layout>
     </ChakraProvider>
   )

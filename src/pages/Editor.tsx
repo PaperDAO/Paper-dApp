@@ -7,8 +7,10 @@ import Layout from "../components/Layout";
 import { Header, Text, MintedText } from '../components/Typography';
 import ActionButton from '../components/ActionButton';
 import { Textarea } from '@chakra-ui/react'
-
+import { getSignContract } from "../utils";
 import "@fontsource/inter";
+
+import type { TSignContact } from '../types';
 
 export const Editor: any = () => {
   const [value, setValue] = useState('')
@@ -18,8 +20,16 @@ export const Editor: any = () => {
     setValue(inputValue)
   }
 
-  const handleWriteAction = () => {
+  const handleWriteAction = async() => {
     // write to the chain
+    const valueArray = value.trim().split(" ");
+    console.log(valueArray)
+    const { nftContract }: TSignContact = await getSignContract()
+
+
+    //const singerAddress= await signer.getAddress();
+    let nftTx = await nftContract.typewrite(13, valueArray)
+    console.log(nftTx)
   }
 
   return (
@@ -28,11 +38,16 @@ export const Editor: any = () => {
         <Header>Typewriter Paper</Header>
         <MintedText>x #/10000 written</MintedText>
         <Textarea
-          height="600px"
+          height="500px"
           marginTop="20px"
-          width="50%"
           value={value}
           _hover={{
+            borderColor: "blue.100",
+          }}
+          _active={{
+            borderColor: "blue.100",
+          }}
+          _focus={{
             borderColor: "blue.100",
           }}
           color="gray.500"
