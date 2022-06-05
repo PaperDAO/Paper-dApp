@@ -4,8 +4,8 @@ import { keyframes } from 'styled-components'
 const breatheAnimation = keyframes`
  0% { height: 45px; width: 410px; }
  30% { height: 40px; width: 450px; opacity: 1 }
- 40% { height: 50px; width: 545px; opacity: 0.3; }
- 100% { height: 35px; width: 390px; opacity: 0.6; }
+ 40% { height: 50px; width: 545px; opacity: 0.3; color: pink }
+ 100% { height: 35px; width: 390px; opacity: 0.6; color: violet }
 `
 const mainColor = "#cacbcc";
 
@@ -31,6 +31,7 @@ export const LinkText = styled.div`
 export const MintStatusText = styled.div`
   color: #66aed6;
   font-size: 18px;
+  font-weight: bold;
   animation-name: ${breatheAnimation};
   animation-duration: 8s;
   animation-iteration-count: infinite;
