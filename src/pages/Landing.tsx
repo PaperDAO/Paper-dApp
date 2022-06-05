@@ -90,6 +90,8 @@ const Landing = () => {
 
   // Creates transaction to mint NFT on clicking Mint Character button
   const mintCharacter = async () => {
+    setMiningStatus(0)
+    
     try {
       const { signer, nftContract }: TSignContact = await getSignContract()
       
