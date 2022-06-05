@@ -1,10 +1,10 @@
 import React, {useContext, useEffect} from "react";
 import { useState } from "react";
 import styled from 'styled-components'
-import {Box, ChakraProvider, Input, Select} from "@chakra-ui/react";
+import { Box, ChakraProvider, Input, Select } from "@chakra-ui/react";
 import theme from "../theme";
 import Layout from "../components/Layout";
-import { Header, Text, MintedText, SubText } from '../components/Typography';
+import { Header, Text, MintedText, SubText, MintStatusText } from '../components/Typography';
 import ActionButton from '../components/ActionButton';
 import { Textarea } from '@chakra-ui/react'
 import {getPaperMetadata, getSignContract} from "../utils";
@@ -13,6 +13,12 @@ import "@fontsource/inter";
 import type { TSignContact } from '../types';
 import { AppContext, Paper } from "../Router";
 
+const Title = styled.div`
+  color: #cacbcc;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+`
 
 const Editor = () => {
   const [value, setValue] = useState('')
@@ -42,9 +48,11 @@ const Editor = () => {
     refetchAppData()
     refetchUserPapers()
     setMiningStatusMsg(`Written!`)
+    setValue('')
   }
 
   function handleWhitepaperSelected(event: any) {
+    setMiningStatusMsg('')
     setCurrentTokenId(event.target.value)
   }
 
@@ -56,8 +64,6 @@ const Editor = () => {
   }, [userPapers]);
 
   const currentPaper =  !!userPapers?.length ? userPapers.find((paper: Paper) => paper.id === currentTokenId?.toString()) : undefined;
-
-  console.log(currentPaper);
 
   const RenderSvg = ({ image_data }: { image_data: string }) => {
     const buff = new Buffer(image_data);
@@ -77,6 +83,7 @@ const Editor = () => {
 
         {currentPaper?.isEdited &&
           <Box w='60%'  mt={20} onClick={() => {}}>
+             <Title>{`Title: ${currentPaper?.paperTitle}`}</Title>
             <RenderSvg image_data={currentPaper.metadata?.image_data} />
           </Box>
         }
@@ -100,10 +107,10 @@ const Editor = () => {
                                   borderColor: "blue.100",
                                 }} placeholder={"Paper title"} />
             <Textarea
-              height="500px"
+              height="700px"
               fontSize="14px"
               marginTop="20px"
-              width="40%"
+              width="550px"
               borderWidth="3px"
               value={value}
               _hover={{
@@ -120,11 +127,11 @@ const Editor = () => {
               placeholder='Text editor'>
             </Textarea>
             <Box marginBottom="40px">
-              {!!miningStatusMsg && <SubText>{miningStatusMsg}</SubText> }
               <ActionButton
                 handleAction={handleWriteAction}
                 width="300px"
                 text="Write to the blockchain" />
+              {!!miningStatusMsg && <MintStatusText>{miningStatusMsg}</MintStatusText>}
             </Box>
           </>)
         }
