@@ -8,6 +8,7 @@ import Collection from './pages/Collection';
 import { ethers } from "ethers";
 import detectEhereumProvider from "@metamask/detect-provider";
 import { useEthers } from "@usedapp/core";
+import {AssetMetaData, getPaperMetadata} from "./utils";
 
 
 const getConnectedAccount = async () => {
@@ -29,10 +30,11 @@ const getConnectedAccount = async () => {
     }
 }
 
-interface Paper {
+export interface Paper {
   id: string;
-  papaer:string;
+  paper:string;
   isEdited: boolean;
+  metadata: AssetMetaData;
 }
 interface AppData {
   numMinted: number;
@@ -73,7 +75,19 @@ const AppRoutes: any = () => {
             {
                 user
             },);
-        return res.whitepapers;
+
+         let whitepapers = res.whitepapers;
+        whitepapers =  whitepapers.map((paper: Paper) => {
+            const metadata = getPaperMetadata(paper);
+
+            return {
+                ...paper,
+                metadata: metadata || {}
+            }
+        })
+
+
+        return whitepapers;
     })
     const {data: appData, refetch: refetchAppData} =  useQuery<AppData>('getAppData', async  () => {
         const res = await request(
