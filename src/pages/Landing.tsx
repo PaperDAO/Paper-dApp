@@ -1,6 +1,6 @@
 import React, {useContext, useMemo} from 'react';
 import { useState } from 'react'
-import { nftContractAddress } from '../config'
+import {NetWorkName, nftContractAddress} from '../config'
 import { useEthers } from "@usedapp/core";
 import {
   ChakraProvider,
@@ -23,7 +23,7 @@ import {
 } from '../components/Typography';
 import { Flex } from "@chakra-ui/react";
 import theme from "../theme";
-import { getSignContract } from '../utils';
+import {checkCorrectNetwork, getSignContract} from '../utils';
 import { Link as ReachLink } from "react-router-dom"
 
 import { AppContext } from "../Router";
@@ -43,17 +43,6 @@ const Landing = () => {
   const { refetchUserPapers, appData, refetchAppData } = useContext(AppContext);
 
 
-  	// Checks if wallet is connected to the correct network
-	const checkCorrectNetwork = async () => {
-		const { ethereum } = window
-		let chainId = await ethereum.request({ method: 'eth_chainId' })
-		console.log('Connected to chain:' + chainId)
-
-		const polygonChainId = '0x89'
-
-		return chainId === polygonChainId;
-	}
-
   // Calls Metamask to connect wallet on clicking Connect Wallet button
   const connectWallet = async () => {
     setCorrectNetworkMsg('')
@@ -63,7 +52,7 @@ const Landing = () => {
       const correctNetwork = await checkCorrectNetwork()
 
       if (!correctNetwork) { 
-        setCorrectNetworkMsg("Change your network to Polygon")
+        setCorrectNetworkMsg(`Change your network to ${NetWorkName}`)
       }
 
       else if (provider) {
@@ -94,7 +83,15 @@ const Landing = () => {
     
     try {
       const { signer, nftContract }: TSignContact = await getSignContract()
-      
+
+      const correctNetwork = await checkCorrectNetwork()
+
+      if (!correctNetwork) {
+        setCorrectNetworkMsg(`Change your network to ${NetWorkName}`)
+        return;
+      }
+
+
       if (signer) {
         const singerAddress= await signer.getAddress();
 

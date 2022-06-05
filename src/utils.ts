@@ -1,10 +1,18 @@
 import detectEhereumProvider from '@metamask/detect-provider';
-import { nftContractAddress } from './config'
+import {NetWorkId, nftContractAddress} from './config'
 import { ethers } from 'ethers'
 import NFT from './Whitepaper.json';
 import {Paper} from "./Router";
 // @ts-ignore
 import base64 from "base-64";
+
+// Checks if wallet is connected to the correct network
+export const checkCorrectNetwork = async () => {
+  const { ethereum } = window
+  let chainId = await ethereum.request({ method: 'eth_chainId' })
+  console.log('Connected to chain:' + chainId)
+  return chainId === NetWorkId;
+}
 
 export async function getSignContract(){
   const provider:any  = await detectEhereumProvider();
