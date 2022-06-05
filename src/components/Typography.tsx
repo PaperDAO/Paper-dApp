@@ -64,6 +64,7 @@ export const Text = styled.div`
   color: ${mainColor};
   font-size: 40px;
   text-align: center;
+  margin: 0;
 `
 export const Header = styled.div`
   color: ${mainColor};

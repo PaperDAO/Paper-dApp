@@ -20,24 +20,23 @@ export default function PaperModal({ isOpen, data, onClose, svg }: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent width="500px">
         <ModalHeader>
-          <SubTextLf>{data?.owner}</SubTextLf>
-          <SubTextLfSm>{data?.paperTitle}</SubTextLfSm>
           <Link
             fontSize="sm"
             display="flex"
-            alignItems="center"
             href={`https://ropsten.etherscan.io/address/${data?.owner}`}
             isExternal
             color="gray.400"
             _hover={{
-              color: "whiteAlpha.800",
+              color: "gray.300",
               textDecoration: "underline",
             }}
           >
             View on Explorer
           </Link>
+          <SubTextLf>{data?.owner}</SubTextLf>
+          <SubTextLfSm>{data?.paperTitle}</SubTextLfSm>
           </ModalHeader>
         <ModalBody>
           <Flex justifyContent="space-between" alignItems="center">

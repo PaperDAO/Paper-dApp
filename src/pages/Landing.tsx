@@ -124,9 +124,9 @@ const Landing = () => {
     <ChakraProvider theme={theme}>
       <Layout>
         <Header>
-          White Paper <br/>
+          White Paper
         </Header>
-        <Text>By</Text><br/>
+        <Text>By</Text>
         <Header>
           White Paper DAO
         </Header>
