@@ -1,12 +1,11 @@
 import React, {useContext, useEffect} from "react";
 import { useState } from "react";
 import styled from 'styled-components'
-import { Box, ChakraProvider, Input, Select, Text } from "@chakra-ui/react";
+import { Box, ChakraProvider, Input, Select, Text, Link, Textarea } from "@chakra-ui/react";
 import theme from "../theme";
 import Layout from "../components/Layout";
-import { Header, MintedText, SubText, MintStatusText, ResultTxt } from '../components/Typography';
+import { Header, MintedText, SubText, MintStatusText, ResultTxt, LinkText } from '../components/Typography';
 import ActionButton from '../components/ActionButton';
-import { Textarea } from '@chakra-ui/react'
 import { getSignContract} from "../utils";
 import "@fontsource/inter";
 import  {flatten} from 'lodash'
@@ -123,6 +122,14 @@ const Editor = () => {
         {currentPaper?.isEdited &&
           <Box w='60%'  mt={20} onClick={() => {}}>
              <Title>{currentPaper?.paperTitle}</Title>
+             <LinkText>View on OpenSea: {getOpenseaURL(currentPaper)}
+              <Link to={getOpenseaURL(currentPaper)}
+                isExternal
+                _hover={{
+                  color: "gray.300",
+                  textDecoration: "underline",
+                }}/>
+            </LinkText>
             <RenderSvg image_data={currentPaper.metadata?.image_data} />
           </Box>
         }
