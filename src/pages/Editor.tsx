@@ -12,7 +12,11 @@ import "@fontsource/inter";
 
 import type { TSignContact } from '../types';
 
-export const Editor: any = () => {
+type EditorProps = {
+  tokenId?: string;
+};
+
+export const Editor = ({ tokenId }: EditorProps) => {
   const [value, setValue] = useState('')
 
   const handleInputChange = (e:any) => {
@@ -26,9 +30,9 @@ export const Editor: any = () => {
     console.log(valueArray)
     const { nftContract }: TSignContact = await getSignContract()
 
-
+    console.log({tokenId})
     //const singerAddress= await signer.getAddress();
-    let nftTx = await nftContract.typewrite(13, valueArray)
+    let nftTx = await nftContract.typewrite(tokenId, valueArray)
     console.log(nftTx)
   }
 
