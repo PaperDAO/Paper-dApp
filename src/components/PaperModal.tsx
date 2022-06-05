@@ -1,19 +1,10 @@
 import {
-  Box,
-  Button,
   Flex,
-  Link,
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
-  Text,
 } from "@chakra-ui/react";
-import { ExternalLinkIcon, CopyIcon } from "@chakra-ui/icons";
-import Identicon from "./Identicon";
 
 type Props = {
   isOpen: any;
@@ -28,7 +19,9 @@ export default function PaperModal({ isOpen, onClose, svg }: Props) {
       <ModalContent>
         <ModalBody>
           <Flex justifyContent="space-between" alignItems="center">
-            <img src={`data:image/svg+xml;base64,${svg}`} />
+            <div>
+              <img src={`data:image/svg+xml;base64,${svg}`} />
+            </div>
           </Flex>
         </ModalBody>
       </ModalContent>
