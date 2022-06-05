@@ -12,6 +12,8 @@ import "@fontsource/inter";
 import  {flatten} from 'lodash'
 import type { TSignContact } from '../types';
 import { AppContext, Paper } from "../Router";
+import {nftContractAddress} from "../config";
+import axios from "axios";
 
 const Title = styled.div`
   color: #cacbcc;
@@ -19,6 +21,26 @@ const Title = styled.div`
   font-weight: 700;
   text-align: center;
 `
+
+function getOpenseaApiRequestURL(paper: Paper) {
+  const network = "testnet";
+  const apiSubDomain = network === "testnet" ? "testnets-api" : "api";
+
+  return `https://${apiSubDomain}.opensea.io/api/v1/asset/${nftContractAddress}/${paper.id}/?force_update=true`;
+}
+
+async function updateOpenseanMetadata(paper: Paper | undefined) {
+  if (!paper) {
+    return;
+  }
+  const url = getOpenseaApiRequestURL(paper);
+  try {
+    await axios.get(url);
+  } catch(e) {
+    console.error(e)
+  }
+}
+
 
 const Editor = () => {
   const [value, setValue] = useState('')
@@ -33,9 +55,14 @@ const Editor = () => {
     setValue(inputValue)
   }
 
+
+
+
   const handlePageNameChanged = (e: any) => {
     setPageName(e.target.value)
   }
+
+  const currentPaper =  !!userPapers?.length ? userPapers.find((paper: Paper) => paper.id === currentTokenId?.toString()) : undefined;
 
 
   const handleWriteAction = async() => {
@@ -53,6 +80,7 @@ const Editor = () => {
     await nftTx.wait(2)
     refetchAppData()
     refetchUserPapers()
+    updateOpenseanMetadata(currentPaper);
     setMiningStatusMsg('')
     setResultMsg(`Written!`)
     setValue('')
@@ -70,8 +98,6 @@ const Editor = () => {
     }
 
   }, [userPapers]);
-
-  const currentPaper =  !!userPapers?.length ? userPapers.find((paper: Paper) => paper.id === currentTokenId?.toString()) : undefined;
 
   const RenderSvg = ({ image_data }: { image_data: string }) => {
     const buff = new Buffer(image_data);
