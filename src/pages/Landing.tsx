@@ -169,11 +169,6 @@ export const Landing = () => {
             text='Mint'/>
         </Flex>
         <SubText>{miningStatusMsg}</SubText>
-        {miningStatus && (
-          <Button
-            value='Mint'/>
-          )
-        }
         <MintedText>x #/ 10,000</MintedText>
         <MarketLogos nftContractAddress={nftContractAddress} />
       </Layout>

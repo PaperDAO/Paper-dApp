@@ -29,8 +29,7 @@ export const Editor = ({ tokenId }: EditorProps) => {
     const valueArray = value.trim().split(" ");
     const { nftContract }: TSignContact = await getSignContract()
 
-    let nftTx = await nftContract.typewrite(tokenId, valueArray)
-    console.log(nftTx)
+    await nftContract.typewrite(tokenId, valueArray)
   }
 
   return (
@@ -40,6 +39,7 @@ export const Editor = ({ tokenId }: EditorProps) => {
         <MintedText>x #/10000 written</MintedText>
         <Textarea
           height="500px"
+          fontSize="14px"
           marginTop="20px"
           width="40%"
           value={value}
