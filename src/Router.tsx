@@ -137,21 +137,6 @@ const AppRoutes: any = () => {
 
 
     return (
-<<<<<<< HEAD
-         <Router>
-          <Routes>
-          <Route
-              path="/"
-              element={<Landing />} />
-          <Route
-              path="/editor"
-              element={<Editor />} />
-          <Route
-              path="/market"
-              element={<Collection />} />
-        </Routes>
-      </Router>
-=======
         <AppContext.Provider value={{userPapers: userPapers, refetchUserPapers, appData, refetchAppData}}>
                  <Router>
                   <Routes>
@@ -162,15 +147,11 @@ const AppRoutes: any = () => {
                       path="/editor"
                       element={<Editor />} />
                   <Route
-                      path="/paper"
-                      element={<Paper />} />
-                  <Route
-                      path="/market"
-                      element={<Market />} />
+                      path="/collection"
+                      element={<Collection />} />
                 </Routes>
               </Router>
         </AppContext.Provider>
->>>>>>> more logic
 
 );
 }
