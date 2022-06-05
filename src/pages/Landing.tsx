@@ -25,22 +25,6 @@ const Landing = () => {
   const [currentToken, setToken] = useState('')
   const { account } = useEthers();
 
-  // Checks if wallet is connected
-  const checkIfWalletIsConnected = async () => {
-    const { ethereum } = window;
-
-    if (ethereum) {
-
-    const accounts = await ethereum.request({ method: 'eth_accounts' })
-
-      if (accounts.length !== 0) {
-        console.log('Found authorized Account: ', accounts[0])
-        setCurrentAccount(accounts[0])
-      } else {
-        console.log('No authorized account found')
-      }
-    }
-  }
 
   // Calls Metamask to connect wallet on clicking Connect Wallet button
   const connectWallet = async () => {
@@ -70,24 +54,6 @@ const Landing = () => {
     }
   }
 
-  // Checks if wallet is connected to the correct network
-  const checkNetwork = async () => {
-    let chainId = await window.ethereum.request({ method: 'eth_chainId' })
-    console.log('Connected to chain:' + chainId)
-
-    const rinkebyChainId = '0x4'
-
-    if (chainId !== rinkebyChainId) {
-      setNetwork(1)
-    } else {
-      setNetwork(2)
-    }
-  }
-
-  useEffect(() => {
-    checkIfWalletIsConnected()
-    checkNetwork()
-  }, [])
 
   // Creates transaction to mint NFT on clicking Mint Character button
   const mintCharacter = async () => {
