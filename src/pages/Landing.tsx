@@ -90,11 +90,7 @@ const Landing = () => {
         <Header>
           White Paper DAO
         </Header>
-        <Text>
-          One free mint + Gas <br/>
-          Per wallet
-        </Text>
-        <SubText>No trees were harmed in the minting of this paper</SubText>
+        <MintedText>#{appData?.numMinted || 0}/ 10,000</MintedText>
         <Flex>
           {!account ? (
             <ActionButton
@@ -122,7 +118,12 @@ const Landing = () => {
             handleAction={mintCharacter}
             text='Mint'/>}
         </Flex>
-        <Text>1 White Paper per wallet</Text>
+
+        <Text>
+          One free mint + Gas <br/>
+          Per wallet
+        </Text>
+        <SubText>No trees were harmed in the minting of this paper</SubText>
         <Box mt={2}>
           <SubText>
             &nbsp;&nbsp;&nbsp;&nbsp;1 – 1000 – Free mint + gas    5001 – 6000 – 5.0 MATIC + gas<br/>
@@ -132,8 +133,8 @@ const Landing = () => {
             &nbsp;4001 – 5000 – 4.0 MATIC + gas    9001 – 10000 – 9.0 MATIC + gas<br/>
           </SubText>
         </Box>
-        <SubText>{miningStatusMsg}</SubText>
-        {miningStatus && (
+        {miningStatusMsg && <SubText>{miningStatusMsg}</SubText>}
+        {!!miningStatus && (
             <Link
               px={2}
               py={1}
@@ -152,7 +153,6 @@ const Landing = () => {
               </Flex>
             </Link>
         )}
-        <MintedText>x #/ 10,000</MintedText>
         <MarketLogos nftContractAddress={nftContractAddress} />
       </Layout>
     </ChakraProvider>
