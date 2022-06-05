@@ -2,10 +2,10 @@ import styled from 'styled-components'
 import { keyframes } from 'styled-components'
 
 const breatheAnimation = keyframes`
- 0% { height: 50px; width: 400px; }
- 30% { height: 70px; width: 450px; opacity: 1 }
- 40% { height: 60px; width: 505px; opacity: 0.3; }
- 100% { height: 70px; width: 390px; opacity: 0.6; }
+ 0% { height: 45px; width: 410px; }
+ 30% { height: 40px; width: 450px; opacity: 1 }
+ 40% { height: 50px; width: 545px; opacity: 0.3; }
+ 100% { height: 35px; width: 390px; opacity: 0.6; }
 `
 const mainColor = "#cacbcc";
 

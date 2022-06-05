@@ -35,8 +35,8 @@ export interface Paper {
   paper:string;
   isEdited: boolean;
   metadata: AssetMetaData;
-    paperTitle: string;
-    paperContent: string;
+  paperTitle: string;
+  paperContent: string;
 }
 interface AppData {
   numMinted: number;
