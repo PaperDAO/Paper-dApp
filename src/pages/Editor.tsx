@@ -15,7 +15,7 @@ import { AppContext, Paper } from "../Router";
 
 const Title = styled.div`
   color: #cacbcc;
-  font-size: 24px;
+  font-size: 34px;
   font-weight: 700;
   text-align: center;
 `
@@ -50,6 +50,7 @@ const Editor = () => {
     refetchUserPapers()
     setMiningStatusMsg(`Written!`)
     setValue('')
+    setPageName('')
   }
 
   function handleWhitepaperSelected(event: any) {
@@ -84,7 +85,7 @@ const Editor = () => {
 
         {currentPaper?.isEdited &&
           <Box w='60%'  mt={20} onClick={() => {}}>
-             <Title>{`Title: ${currentPaper?.paperTitle}`}</Title>
+             <Title>{currentPaper?.paperTitle}</Title>
             <RenderSvg image_data={currentPaper.metadata?.image_data} />
           </Box>
         }
@@ -132,8 +133,8 @@ const Editor = () => {
                 handleAction={handleWriteAction}
                 width="300px"
                 text="Write to the blockchain" />
-              {!!miningStatusMsg && <MintStatusText>{miningStatusMsg}</MintStatusText>}
             </Box>
+            {!!miningStatusMsg && <MintStatusText>{miningStatusMsg}</MintStatusText>}
           </>)
         }
       </Layout>

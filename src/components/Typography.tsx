@@ -34,12 +34,25 @@ export const MintStatusText = styled.div`
   animation-name: ${breatheAnimation};
   animation-duration: 8s;
   animation-iteration-count: infinite;
+  margin-top: 10px;
 `
 export const SubText = styled.div`
   color: ${mainColor};
   font-size: 20px;
   font-weight: 700;
   text-align: center;
+`
+export const SubTextLf = styled.div`
+  color: ${mainColor};
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+`
+export const SubTextLfSm = styled.div`
+  color: ${mainColor};
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
 `
 export const ErrorText = styled.div`
   color: white;
