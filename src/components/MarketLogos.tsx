@@ -20,7 +20,7 @@ export default function MarketLogos({ nftContractAddress }: MarketLogosProps) {
       py={2}
       justifyContent='space-evenly'>
       <Link
-        href={`https://opensea.io//collection/${nftContractAddress}`}
+        href={`https://testnets.opensea.io/collection/whitepaper-zew70fojy4`}
         isExternal
       >
       <Image
@@ -28,17 +28,6 @@ export default function MarketLogos({ nftContractAddress }: MarketLogosProps) {
         objectFit='cover'
         src={osLogo}
         alt='OpenSea'
-      />
-    </Link>
-    <Link
-      isExternal
-      href={`https://looksrare.org/collection/${nftContractAddress}`}
-    >
-      <Image
-        boxSize='50px'
-        objectFit='cover'
-        src={rarLogo}
-        alt='rar'
       />
     </Link>
     <Link
@@ -54,7 +43,7 @@ export default function MarketLogos({ nftContractAddress }: MarketLogosProps) {
     </Link>
     <Link
       isExternal
-      href={`https://thegraph.com`}
+      href={`https://thegraph.com/hosted-service/subgraph/paperdao/whitepaper`}
     >
       <Image
         boxSize='50px'
