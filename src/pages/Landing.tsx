@@ -62,7 +62,7 @@ const Landing = () => {
       const provider: any = await detectEthereumProvider();
       const correctNetwork = await checkCorrectNetwork()
 
-      if (!correctNetwork) {
+      if (false) { // TODO
         setCorrectNetworkMsg("Change your network to Polygon")
       }
 
@@ -74,7 +74,7 @@ const Landing = () => {
         window.location.reload();
       }
     } catch (error) {
-      setCorrectNetworkMsg(`Error connecting to metamask ${error.message}`)
+      setCorrectNetworkMsg(`Error connecting to metamask`)
     }
   }
 
