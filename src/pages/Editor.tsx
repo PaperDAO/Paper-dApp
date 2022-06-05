@@ -63,8 +63,8 @@ const Editor = ({ tokenId }: EditorProps) => {
         <Header>Typewriter Paper</Header>
         <MintedText>#{appData?.numEdited || 0}/10000 written</MintedText>
 
-        <Select placeholder='Select Whitepaper you Own' onChange={handleWhitepaperSelected} value={currentTokenId}>
-          {userPapers?.length && userPapers.map(paper => <option value={paper.id}>Whitepaper #{paper.id} {paper.isEdited && "- Edited"}</option>)}
+        <Select placeholder='Select Whitepaper you own..' onChange={handleWhitepaperSelected} value={currentTokenId}>
+          {userPapers?.length && userPapers.map(paper => <option value={paper.id}>Whitepaper #{paper.id} {paper.isEdited && "- Written"}</option>)}
         </Select>
 
         {currentPaper?.isEdited &&
