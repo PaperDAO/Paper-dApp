@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Box, Text } from "@chakra-ui/react";
 import { useEthers, useEtherBalance } from "@usedapp/core";
 import { formatEther } from "@ethersproject/units";
@@ -8,8 +9,20 @@ type Props = {
 };
 
 export default function ConnectButton({ handleOpenModal }: Props) {
-  const { activateBrowserWallet, account } = useEthers();
+  const { activateBrowserWallet, account, library } = useEthers();
   const etherBalance = useEtherBalance(account);
+  // const [signer, setSigner] = React.useState<any>(undefined);
+
+  // React.useEffect(() => {
+  //   if (account) {
+  //     console.log("library")
+  //     console.log(library)
+  //     setSigner(library?.getSigner());
+  //   } else {
+  //     // Deactivate signer if signed out
+  //     setSigner(undefined);
+  //   }
+  // }, [account]);
 
   function handleConnectWallet() {
     activateBrowserWallet();
