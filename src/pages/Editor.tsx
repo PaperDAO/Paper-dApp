@@ -122,14 +122,14 @@ const Editor = () => {
         {currentPaper?.isEdited &&
           <Box w='60%'  mt={20} onClick={() => {}}>
              <Title>{currentPaper?.paperTitle}</Title>
-             <LinkText>View on OpenSea: {getOpenseaURL(currentPaper)}
-              <Link to={getOpenseaURL(currentPaper)}
+              <Link href={getOpenseaURL(currentPaper)}
                 isExternal
                 _hover={{
                   color: "gray.300",
                   textDecoration: "underline",
-                }}/>
-            </LinkText>
+                }}>
+                <LinkText>View on OpenSea: {getOpenseaURL(currentPaper)}</LinkText>
+              </Link>
             <RenderSvg image_data={currentPaper.metadata?.image_data} />
           </Box>
         }
