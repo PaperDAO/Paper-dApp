@@ -16,7 +16,8 @@ export default function ActionButton({
     <Button
       onClick={handleAction}
       fontSize="lg"
-      fontWeight="medium"
+      fontWeight="bold"
+      borderWidth="3px"
       borderRadius="xl"
       border="2px solid transparent"
       _hover={{

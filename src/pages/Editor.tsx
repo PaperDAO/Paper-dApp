@@ -1,17 +1,17 @@
 import React, {useContext, useEffect} from "react";
 import { useState } from "react";
 import styled from 'styled-components'
-import {Box, ChakraProvider, Select} from "@chakra-ui/react";
+import { Box, ChakraProvider, Select } from "@chakra-ui/react";
 import theme from "../theme";
 import Layout from "../components/Layout";
-import {Header, Text, MintedText, SubText} from '../components/Typography';
+import { Header, Text, MintedText, SubText } from '../components/Typography';
 import ActionButton from '../components/ActionButton';
 import { Textarea } from '@chakra-ui/react'
 import {getPaperMetadata, getSignContract} from "../utils";
 import "@fontsource/inter";
 
 import type { TSignContact } from '../types';
-import {AppContext, Paper} from "../Router";
+import { AppContext, Paper } from "../Router";
 
 type EditorProps = {
   tokenId?: string;
@@ -19,12 +19,8 @@ type EditorProps = {
 
 const Editor = ({ tokenId }: EditorProps) => {
   const [value, setValue] = useState('')
-
   const [miningStatusMsg, setMiningStatusMsg] = useState('')
-
-
   const {userPapers, appData, refetchAppData, refetchUserPapers} = useContext(AppContext);
-
   const [currentTokenId, setCurrentTokenId] = useState<string>();
 
   const handleInputChange = (e:any) => {
@@ -51,7 +47,7 @@ const Editor = ({ tokenId }: EditorProps) => {
 
   const currentPaper =  !!userPapers?.length ? userPapers.find((paper: Paper) => paper.id === currentTokenId) : undefined;
 
-  const RenderSvg = ({image_data}: {image_data: string}) => {
+  const RenderSvg = ({ image_data }: { image_data: string }) => {
     const buff = new Buffer(image_data);
     const base64data = buff.toString('base64');
     return <img src={`data:image/svg+xml;base64,${base64data}`} />
@@ -63,44 +59,46 @@ const Editor = ({ tokenId }: EditorProps) => {
         <Header>Typewriter Paper</Header>
         <MintedText>#{appData?.numEdited || 0}/10000 written</MintedText>
 
-        <Select placeholder='Select Whitepaper you own..' onChange={handleWhitepaperSelected} value={currentTokenId}>
+        <Select borderWidth="3px" width="50%" nplaceholder='Select Whitepaper you own..' onChange={handleWhitepaperSelected} value={currentTokenId}>
           {userPapers?.length && userPapers.map(paper => <option value={paper.id}>Whitepaper #{paper.id} {paper.isEdited && "- Written"}</option>)}
         </Select>
 
         {currentPaper?.isEdited &&
-            <Box w='60%'  mt={20} onClick={() => {}}>
-              <RenderSvg image_data={currentPaper.metadata?.image_data} />
-            </Box>
+          <Box w='60%'  mt={20} onClick={() => {}}>
+            <RenderSvg image_data={currentPaper.metadata?.image_data} />
+          </Box>
         }
 
         {currentPaper && !currentPaper.isEdited &&
-            (<>
+          (<>
             <Textarea
-          height="500px"
-          fontSize="14px"
-          marginTop="20px"
-          width="40%"
-          value={value}
-          _hover={{
-          borderColor: "blue.100",
-        }}
-          _active={{
-          borderColor: "blue.100",
-        }}
-          _focus={{
-          borderColor: "blue.100",
-        }}
-          color="gray.500"
-          onChange={handleInputChange}
-          placeholder='Text editor'>
-          </Textarea>
-          <Box marginBottom="40px">
-            {!!miningStatusMsg && <SubText>{miningStatusMsg}</SubText> }
-            <ActionButton
-          handleAction={handleWriteAction}
-          width="300px"
-          text="Write to the blockchain" />
-          </Box></>)
+              height="500px"
+              fontSize="14px"
+              marginTop="20px"
+              width="40%"
+              borderWidth="3px"
+              value={value}
+              _hover={{
+                borderColor: "blue.100",
+              }}
+              _active={{
+                borderColor: "blue.100",
+              }}
+              _focus={{
+                borderColor: "blue.100",
+              }}
+              color="gray.500"
+              onChange={handleInputChange}
+              placeholder='Text editor'>
+            </Textarea>
+            <Box marginBottom="40px">
+              {!!miningStatusMsg && <SubText>{miningStatusMsg}</SubText> }
+              <ActionButton
+                handleAction={handleWriteAction}
+                width="300px"
+                text="Write to the blockchain" />
+            </Box>
+          </>)
         }
       </Layout>
     </ChakraProvider>

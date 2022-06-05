@@ -11,7 +11,14 @@ type MarketLogosProps = {
 
 export default function MarketLogos({ nftContractAddress }: MarketLogosProps) {
   return (
-    <Stack marginTop={45} direction='row' width={350} justifyContent='space-between'>
+    <Stack
+      marginTop={75}
+      direction='row'
+      width={400}
+      background="gray.200"
+      px={6}
+      py={2}
+      justifyContent='space-evenly'>
       <Link
         href={`https://opensea.io//collection/${nftContractAddress}`}
         isExternal

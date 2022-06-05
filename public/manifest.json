@@ -3,18 +3,18 @@
   "name": "WhitePaperDao",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "page.jpeg",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/jpeg"
     },
     {
-      "src": "logo.png",
-      "type": "image/png",
+      "src": "page.jpeg",
+      "type": "image/jpeg",
       "sizes": "192x192"
     },
     {
-      "src": "logo.png",
-      "type": "image/png",
+      "src": "page.jpeg",
+      "type": "image/jpeg",
       "sizes": "512x512"
     }
   ],
