@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import { useState } from 'react'
 import { nftContractAddress } from '../config'
 import { useEthers } from "@usedapp/core";
@@ -48,6 +48,16 @@ const Landing = () => {
     }
   }
 
+  const mintPrice = useMemo(() => {
+    const confPriceStart = 0;
+    const confPriceInterval = 1000;
+    const confPriceStep = 1;
+    const tokenId = appData?.numMinted || 0;
+    let xx = Math.floor((tokenId + 1)  / confPriceInterval);
+    const price = confPriceStart + (xx * confPriceStep);
+    console.log("mintPrice ", tokenId, price)
+    return price;
+  }, [appData])
 
   // Creates transaction to mint NFT on clicking Mint Character button
   const mintCharacter = async () => {
@@ -56,7 +66,12 @@ const Landing = () => {
       
       if (signer) {
         const singerAddress= await signer.getAddress();
-        let nftTx = await nftContract.mint(singerAddress)
+
+        console.log(mintPrice * 10 ** 18);
+
+        let nftTx = await nftContract.mint(singerAddress,  {
+          value: mintPrice * 10 ** 18
+        });
         setMiningStatusMsg(`Mining.... ${nftTx.hash}`)
   
 
