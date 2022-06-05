@@ -24,7 +24,7 @@ export default function Layout({ children }: Props) {
        <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <HStack spacing={8} alignItems={'center'}>
-            <Box><Text color="gray.400" fontWeight="600">WhitePaperDao</Text></Box>
+            <Box><Text color="gray.400" fontWeight="600">WhitePaperDAO</Text></Box>
             <HStack
               as={'nav'}
               spacing={4}
