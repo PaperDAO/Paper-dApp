@@ -30,6 +30,7 @@ const Editor = () => {
 
   const handleInputChange = (e:any) => {
     let inputValue = e.target.value
+    inputValue = inputValue.replace(/(.{80})/g, "$1\n")
     setValue(inputValue)
   }
 
