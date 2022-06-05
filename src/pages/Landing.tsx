@@ -62,7 +62,7 @@ const Landing = () => {
       const provider: any = await detectEthereumProvider();
       const correctNetwork = await checkCorrectNetwork()
 
-      if (false) { // TODO
+      if (!correctNetwork) { 
         setCorrectNetworkMsg("Change your network to Polygon")
       }
 
@@ -107,9 +107,9 @@ const Landing = () => {
         setMiningStatus(1)
         let event = tx.events[0]
 
+        setMiningStatusMsg('')
         refetchUserPapers();
         refetchAppData();
-        setMiningStatusMsg('')
         // `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTx.hash}`
       } else {
         console.log("Ethereum object doesn't exist!")

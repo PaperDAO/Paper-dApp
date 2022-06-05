@@ -1,10 +1,10 @@
 import React, {useContext, useEffect} from "react";
 import { useState } from "react";
 import styled from 'styled-components'
-import { Box, ChakraProvider, Input, Select } from "@chakra-ui/react";
+import { Box, ChakraProvider, Input, Select, Text } from "@chakra-ui/react";
 import theme from "../theme";
 import Layout from "../components/Layout";
-import { Header, Text, MintedText, SubText, MintStatusText } from '../components/Typography';
+import { Header, MintedText, SubText, MintStatusText, ResultTxt } from '../components/Typography';
 import ActionButton from '../components/ActionButton';
 import { Textarea } from '@chakra-ui/react'
 import {getPaperMetadata, getSignContract} from "../utils";
@@ -23,8 +23,8 @@ const Title = styled.div`
 const Editor = () => {
   const [value, setValue] = useState('')
   const [pageName, setPageName] = useState('')
-
   const [miningStatusMsg, setMiningStatusMsg] = useState('')
+  const [resultMsg, setResultMsg] = useState('')
   const {userPapers, appData, refetchAppData, refetchUserPapers} = useContext(AppContext);
   const [currentTokenId, setCurrentTokenId] = useState<string>();
 
@@ -48,7 +48,8 @@ const Editor = () => {
     await nftTx.wait(2)
     refetchAppData()
     refetchUserPapers()
-    setMiningStatusMsg(`Written!`)
+    setMiningStatusMsg('')
+    setResultMsg(`Written!`)
     setValue('')
     setPageName('')
   }
@@ -72,6 +73,7 @@ const Editor = () => {
     const base64data = buff.toString('base64');
     return <img src={`data:image/svg+xml;base64,${base64data}`} />
   }
+
 
   return (
     <ChakraProvider theme={theme}>
@@ -135,6 +137,7 @@ const Editor = () => {
                 text="Write to the blockchain" />
             </Box>
             {!!miningStatusMsg && <MintStatusText>{miningStatusMsg}</MintStatusText>}
+            {!!resultMsg && <SubText>{resultMsg}</SubText>}
           </>)
         }
       </Layout>
