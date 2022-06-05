@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 
 export interface TSignContact {
-  signer:ethers.providers.JsonRpcSigner;
+  signer:any;
   nftContract:ethers.Contract;
 }
