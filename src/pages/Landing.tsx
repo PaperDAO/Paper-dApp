@@ -1,8 +1,8 @@
-import React from 'react';
-import { useState, useEffect } from 'react'
+import React, {useContext} from 'react';
+import { useState } from 'react'
 import { nftContractAddress } from '../config'
 import { useEthers } from "@usedapp/core";
-import { ChakraProvider, Text as ChackraText, Box, Link } from "@chakra-ui/react";
+import { ChakraProvider, Text as ChackraText, Button,  Box, Link  } from "@chakra-ui/react";
 import Layout from "../components/Layout";
 import ActionButton from '../components/ActionButton';
 import MarketLogos from '../components/MarketLogos';
@@ -13,81 +13,41 @@ import { getSignContract } from '../utils';
 import { Link as ReachLink } from "react-router-dom"
 
 import type { TSignContact } from '../types';
+import {AppContext} from "../Router";
+import {ethers} from "ethers";
+import detectEthereumProvider from "@metamask/detect-provider";
 
 const Landing = () => {
   const [miningStatus, setMiningStatus] = useState(0)
   const [miningStatusMsg, setMiningStatusMsg] = useState('')
   const [loadingState, setLoadingState] = useState(0)
-  const [txError, setTxError] = useState(null)
-  const [currentAccount, setCurrentAccount] = useState('')
-  const [network, setNetwork] = useState(0)
-  const [showEditor, setShowEditor] = useState(true)
-  const [currentToken, setToken] = useState('')
+  const [txError] = useState(null)
   const { account } = useEthers();
 
-  // Checks if wallet is connected
-  const checkIfWalletIsConnected = async () => {
-    const { ethereum } = window;
+  const {refetchUserPapers, appData, refetchAppData} = useContext(AppContext);
 
-    if (ethereum) {
+  console.log({loadingState})
+  console.log({miningStatus})
+  console.log({txError})
 
-    const accounts = await ethereum.request({ method: 'eth_accounts' })
-
-      if (accounts.length !== 0) {
-        console.log('Found authorized Account: ', accounts[0])
-        setCurrentAccount(accounts[0])
-      } else {
-        console.log('No authorized account found')
-      }
-    }
-  }
 
   // Calls Metamask to connect wallet on clicking Connect Wallet button
   const connectWallet = async () => {
     try {
-      const { ethereum } = window;
+      const provider: any = await detectEthereumProvider();
 
-      if (!ethereum) {
-        console.log('Metamask not detected')
-        return
+      if (provider) {
+        const ethProvider =  new ethers.providers.Web3Provider(provider)
+        await ethProvider.send("eth_requestAccounts", []);
+
+        await ethProvider.getSigner().getAddress();
+        window.location.reload();
       }
-      let chainId = await ethereum.request({ method: 'eth_chainId'})
-      console.log('Connected to chain:' + chainId)
-
-      const rinkebyChainId = '0x4'
-
-      if (chainId !== rinkebyChainId) {
-        alert('You are not connected to the Rinkeby Testnet!')
-        return
-      }
-
-      const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
-
-      console.log('Found account', accounts[0])
-      setCurrentAccount(accounts[0])
     } catch (error) {
       console.log('Error connecting to metamask', error)
     }
   }
 
-  // Checks if wallet is connected to the correct network
-  const checkNetwork = async () => {
-    let chainId = await window.ethereum.request({ method: 'eth_chainId' })
-    console.log('Connected to chain:' + chainId)
-
-    const rinkebyChainId = '0x4'
-
-    if (chainId !== rinkebyChainId) {
-      setNetwork(1)
-    } else {
-      setNetwork(2)
-    }
-  }
-
-  useEffect(() => {
-    checkIfWalletIsConnected()
-    checkNetwork()
-  }, [])
 
   // Creates transaction to mint NFT on clicking Mint Character button
   const mintCharacter = async () => {
@@ -100,14 +60,14 @@ const Landing = () => {
         setMiningStatusMsg(`Mining.... ${nftTx.hash}`)
   
 
-        let tx = await nftTx.wait()
+        let tx = await nftTx.wait(2)
         setLoadingState(1)
         setMiningStatusMsg(`Mined! ${tx}`)
         setMiningStatus(1)
         let event = tx.events[0]
-        let value = event.args[2]
-        let tokenId = value.toNumber()
-        setToken(tokenId)
+
+        refetchUserPapers();
+        refetchAppData();
         setMiningStatusMsg(
           `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTx.hash}`
         )
@@ -156,9 +116,11 @@ const Landing = () => {
             </Flex>
             )
           }
+
+          {account &&
           <ActionButton
             handleAction={mintCharacter}
-            text='Mint'/>
+            text='Mint'/>}
         </Flex>
         <Text>1 White Paper per wallet</Text>
         <Box mt={2}>

@@ -1,11 +1,30 @@
 import React from "react";
 import AppRoutes from './Router';
 import "@fontsource/inter";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 
 function App() {
+
   return (
-    <AppRoutes />
+      <QueryClientProvider client={queryClient}>
+
+        <AppRoutes />
+      </QueryClientProvider>
+
   );
 }
 
