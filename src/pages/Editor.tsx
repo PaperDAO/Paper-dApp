@@ -7,9 +7,9 @@ import Layout from "../components/Layout";
 import { Header, Text, MintedText, SubText, MintStatusText } from '../components/Typography';
 import ActionButton from '../components/ActionButton';
 import { Textarea } from '@chakra-ui/react'
-import {getPaperMetadata, getSignContract} from "../utils";
+import { getSignContract} from "../utils";
 import "@fontsource/inter";
-
+import  {flatten} from 'lodash'
 import type { TSignContact } from '../types';
 import { AppContext, Paper } from "../Router";
 
@@ -29,8 +29,7 @@ const Editor = () => {
   const [currentTokenId, setCurrentTokenId] = useState<string>();
 
   const handleInputChange = (e:any) => {
-    let inputValue = e.target.value
-    inputValue = inputValue.replace(/(.{80})/g, "$1\n")
+    let inputValue = e.target.value;
     setValue(inputValue)
   }
 
@@ -41,7 +40,7 @@ const Editor = () => {
 
   const handleWriteAction = async() => {
     let valueArray = value.split("\n");
-    valueArray  = valueArray.map(line => !line ? ' ' : line);
+    valueArray  = flatten(valueArray.map(line => !line ? ' ' : line.replace(/(.{89})/g, "$1\n").split("\n")));
     const { nftContract }: TSignContact = await getSignContract()
     let nftTx = await nftContract.typewrite(Number(currentTokenId),pageName, valueArray)
     setMiningStatusMsg(`Writing to blockchain....`)
@@ -113,6 +112,7 @@ const Editor = () => {
               marginTop="20px"
               width="550px"
               borderWidth="3px"
+              style={{whiteSpace: 'pre-wrap'}}
               value={value}
               _hover={{
                 borderColor: "blue.100",
@@ -140,5 +140,4 @@ const Editor = () => {
     </ChakraProvider>
   );
 }
-
 export default Editor;
