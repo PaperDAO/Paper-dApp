@@ -108,39 +108,6 @@ const AppRoutes: any = () => {
 
     })
 
-    // const {data: allPapers, isLoading: allPapersLoading, refetch: refetchAllPapers} =  useQuery('allWhitepapers', async  () => {
-    //     let papers: Paper[] = [];
-    //     let skip = 0;
-    //     let done = false
-    //     do {
-    //         const res = await request(
-    //             "https://api.thegraph.com/subgraphs/name/paperdao/whitepaper",
-    //             gql`
-    //             query ($first: Int, $skip: Int) {
-    //               whitepapers(first: $first, skip: $skip) {
-    //                   id
-    //                   paper
-    //               }
-    //             }`,
-    //             {
-    //                 first: 1000,
-    //                 skip
-    //             });
-    //
-    //         if (res?.whitepapers?.length) {
-    //             papers = [...papers, ...res.whitepapers];
-    //             skip = res?.whitepapers?.length;
-    //         }
-    //         else {
-    //             done = true
-    //         }
-    //     } while (!done);
-    //
-    //     return papers;
-    //
-    //
-    // })
-
 
     return (
         <AppContext.Provider value={{userPapers: userPapers, refetchUserPapers, appData, refetchAppData}}>
