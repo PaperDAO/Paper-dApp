@@ -37,6 +37,7 @@ export interface Paper {
   metadata: AssetMetaData;
     paperTitle: string;
     paperContent: string;
+    owner: string;
 }
 interface AppData {
   numMinted: number;
@@ -74,13 +75,14 @@ const AppRoutes: any = () => {
                       isEdited
                       paperTitle
                       paperContent
+                      owner
                   }
                 }`,
             {
                 user
             },);
 
-         let whitepapers = res.whitepapers;
+         let whitepapers = res?.whitepapers || [];
         whitepapers =  whitepapers.map((paper: Paper) => {
             const metadata = getPaperMetadata(paper);
 

@@ -33,9 +33,9 @@ const Editor = () => {
 
 
   const handleWriteAction = async() => {
-    const valueArray = value.split("\n");
+    let valueArray = value.split("\n");
+    valueArray  = valueArray.map(line => !line ? ' ' : line);
     const { nftContract }: TSignContact = await getSignContract()
-
     let nftTx = await nftContract.typewrite(Number(currentTokenId),pageName, valueArray)
     setMiningStatusMsg(`Writing to blockchain....`)
     await nftTx.wait(2)
