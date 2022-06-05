@@ -29,6 +29,10 @@ function getOpenseaApiRequestURL(paper: Paper) {
   return `https://${apiSubDomain}.opensea.io/api/v1/asset/${nftContractAddress}/${paper.id}/?force_update=true`;
 }
 
+function getOpenseaURL(paper: Paper) {
+  return `https://testnets.opensea.io/assets/rinkeby/${nftContractAddress}/${paper.id}`;
+}
+
 async function updateOpenseanMetadata(paper: Paper | undefined) {
   if (!paper) {
     return;
