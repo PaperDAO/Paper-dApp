@@ -1,20 +1,19 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
-import { nftContractAddress } from '../config'
+import { nftContractAddress } from './config'
 import { useEthers } from "@usedapp/core";
 import { ChakraProvider, Text as ChackraText, Box, Link } from "@chakra-ui/react";
-import { ArrowRightIcon} from '@chakra-ui/icons'
-import Identicon from "../components/Identicon";
-import Layout from "../components/Layout";
-import ActionButton from '../components/ActionButton';
-import MarketLogos from '../components/MarketLogos';
-import { Header, Text, MintedText, SubText, LinkText } from '../components/Typography';
+import Identicon from "./components/Identicon";
+import Layout from "./components/Layout";
+import ActionButton from './components/ActionButton';
+import MarketLogos from './components/MarketLogos';
+import { Header, Text, MintedText, SubText, LinkText } from './components/Typography';
 import { Flex } from "@chakra-ui/react";
-import theme from "../theme";
-import { getSignContract } from '../utils';
+import theme from "./theme";
+import { getSignContract } from './utils';
 import { Link as ReachLink } from "react-router-dom"
 
-import type { TSignContact } from '../types';
+import type { TSignContact } from './types';
 
 const Landing = () => {
   const [miningStatus, setMiningStatus] = useState(null)
@@ -181,9 +180,6 @@ const Landing = () => {
                   <LinkText>
                     GO TO THE EDITOR
                   </LinkText>
-                </Box>
-                <Box mt={2} ml={2}>
-                  <ArrowRightIcon w={3} h={3} color="#66aed6"  />
                 </Box>
               </Flex>
             </Link>
