@@ -34,10 +34,10 @@ const Landing = () => {
   // Calls Metamask to connect wallet on clicking Connect Wallet button
   const connectWallet = async () => {
     try {
-      const provider = await detectEthereumProvider();
+      const provider: any = await detectEthereumProvider();
 
       if (provider) {
-        const ethProvider =  new ethers.providers.Web3Provider(provider as any)
+        const ethProvider =  new ethers.providers.Web3Provider(provider)
         await ethProvider.send("eth_requestAccounts", []);
 
         await ethProvider.getSigner().getAddress();

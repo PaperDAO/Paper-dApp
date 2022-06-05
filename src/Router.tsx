@@ -5,32 +5,21 @@ import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import Landing from './pages/Landing';
 import  Editor from './pages/Editor';
 import Collection from './pages/Collection';
-import {ethers} from "ethers";
+import { ethers } from "ethers";
 import detectEhereumProvider from "@metamask/detect-provider";
-import {useEthers} from "@usedapp/core";
+import { useEthers } from "@usedapp/core";
 
 
-
-const checkNetwork = async () => {
-    let chainId = await (window as any).ethereum.request({ method: 'eth_chainId' })
-
-    const rinkebyChainId = '0x4'
-
-    if (chainId !== rinkebyChainId) {
-        return 1
-    } else {
-        return 2
-    }
-}
 const getConnectedAccount = async () => {
     const { ethereum } = window;
+
     if (ethereum) {
         console.log('Got the ethereum obejct: ', ethereum)
     } else {
         console.log('No Wallet found. Connect Wallet')
     }
 
-    const accounts = await (window as any).ethereum.request({ method: 'eth_accounts' })
+    const accounts = await ethereum.request({ method: 'eth_accounts' })
 
     if (accounts.length !== 0) {
         console.log('Found authorized Account: ', accounts[0])
@@ -41,23 +30,22 @@ const getConnectedAccount = async () => {
 }
 
 interface Paper {
-    id: string
-    papaer :string
-    isEdited: boolean
+  id: string;
+  papaer:string;
+  isEdited: boolean;
 }
-
 interface AppData {
-        numMinted: number;
-        numEdited: number;
+  numMinted: number;
+  numEdited: number;
+}
+interface IAppContext {
+  userPapers: Paper[] | undefined;
+  refetchUserPapers: () => void;
+  appData: AppData | undefined;
+  refetchAppData: () => void;
+}
 
-}
-interface AppContext {
-    userPapers: Paper[] | undefined
-    refetchUserPapers: () => void
-    appData: AppData | undefined
-    refetchAppData: () => void
-}
-export const AppContext = React.createContext<AppContext>({
+export const AppContext = React.createContext<IAppContext>({
     userPapers: [],
     refetchUserPapers: () => {},
     appData: {
