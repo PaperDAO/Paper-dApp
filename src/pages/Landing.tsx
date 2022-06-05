@@ -5,7 +5,6 @@ import { useEthers } from "@usedapp/core";
 import {
   ChakraProvider,
   Text as ChackraText,
-  Button,
   Box,
   Link,
   SimpleGrid,
@@ -13,16 +12,17 @@ import {
 import Layout from "../components/Layout";
 import ActionButton from '../components/ActionButton';
 import MarketLogos from '../components/MarketLogos';
-import {Header, Text, MintedText, SubText, LinkText, MintStatusText } from '../components/Typography';
+import { Header, Text, MintedText, SubText, LinkText, MintStatusText } from '../components/Typography';
 import { Flex } from "@chakra-ui/react";
 import theme from "../theme";
 import { getSignContract } from '../utils';
 import { Link as ReachLink } from "react-router-dom"
 
-import type { TSignContact } from '../types';
-import {AppContext} from "../Router";
-import {ethers} from "ethers";
+import { AppContext } from "../Router";
+import { ethers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
+
+import type { TSignContact } from '../types';
 
 const Landing = () => {
   const [miningStatus, setMiningStatus] = useState(0)
@@ -31,11 +31,7 @@ const Landing = () => {
   const [txError] = useState(null)
   const { account } = useEthers();
 
-  const {refetchUserPapers, appData, refetchAppData} = useContext(AppContext);
-
-  console.log({loadingState})
-  console.log({miningStatus})
-  console.log({txError})
+  const { refetchUserPapers, appData, refetchAppData } = useContext(AppContext);
 
 
   // Calls Metamask to connect wallet on clicking Connect Wallet button
@@ -66,7 +62,6 @@ const Landing = () => {
         let nftTx = await nftContract.mint(singerAddress)
         setMiningStatusMsg(`Mining.... ${nftTx.hash}`)
   
-
         let tx = await nftTx.wait(2)
         setLoadingState(1)
         setMiningStatusMsg(`Mined! ${tx}`)
@@ -77,7 +72,6 @@ const Landing = () => {
         refetchAppData();
         setMiningStatusMsg('')
         // `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTx.hash}`
-
       } else {
         console.log("Ethereum object doesn't exist!")
       }
