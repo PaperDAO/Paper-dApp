@@ -184,7 +184,6 @@ const Editor = () => {
               onChange={handleInputChange}
               onKeyUp={(evt: any) => {
                 let lines = evt.target.value.split(/\r\n|\r|\n/).length;
-                // (lines > MAX_LINES) ? evt.target.classList.add("error") : evt.target.classList.remove("error");
                 setIsValid(lines <= MAX_LINES)
               }}
               placeholder='Text editor'>
