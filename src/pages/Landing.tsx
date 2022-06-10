@@ -129,7 +129,7 @@ const Landing = () => {
   const renderConnectButton = isMobileDevice() ?
     ( 
       <ActionButton
-        handleAction={openMetaMaskUrl(metamaskAppDeepLink)}
+        handleAction={() => openMetaMaskUrl(metamaskAppDeepLink)}
         text={MESSAGES.CONNECT_WALLET} />
     ) : 
       <ActionButton
