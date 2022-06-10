@@ -57,14 +57,14 @@ export default function Layout({ children }: Props) {
       isVisible: true,
     }, 
     {
-      label: 'Typewriter',
-      link: '/editor',
-      isVisible: !!userPapers?.length,
-    }, 
-    {
       label: 'Collection',
       link: '/collection',
       isVisible: true,
+    }, 
+    {
+      label: 'Typewriter',
+      link: '/editor',
+      isVisible: !!userPapers?.length,
     }, 
   ];
 
