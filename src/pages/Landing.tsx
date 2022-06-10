@@ -69,7 +69,7 @@ const Landing = () => {
         window.location.reload();
       }
     } catch (error) {
-      setConnectionMsg(MESSAGES.CONNECT_ERROR)
+      setConnectionMsg(`${MESSAGES.CONNECT_ERROR}: ${error} `)
     }
   }
 
