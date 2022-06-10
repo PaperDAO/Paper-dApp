@@ -49,3 +49,7 @@ export function getPaperMetadata(paper: Paper): AssetMetaData | null {
     return null;
   }
 }
+
+export function isMobileDevice() {
+  return 'ontouchstart' in window || 'onmsgesturechange' in window;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Text } from "@chakra-ui/react";
 
 type ActionButtonProps = {
-  handleAction: any;
+  handleAction?: any;
   text: string;
   width?: string;
 };
@@ -14,7 +14,7 @@ export default function ActionButton({
 }: ActionButtonProps) {
   return (
     <Button
-      onClick={handleAction}
+      onClick={handleAction ? handleAction : ()=>{}}
       fontSize="lg"
       fontWeight="bold"
       borderWidth="3px"

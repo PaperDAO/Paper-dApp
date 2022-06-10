@@ -1,12 +1,9 @@
-import React from 'react';
-import { Button, Text } from "@chakra-ui/react";
-
-type IconProps = {
+type TIconProps = {
   svg: any;
 };
 
 export default function Icon({
   svg
-}: IconProps) {
+}: TIconProps) {
   return <img src={svg} />
 };

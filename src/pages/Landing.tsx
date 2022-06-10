@@ -1,14 +1,15 @@
-import React, {useContext, useMemo} from 'react';
-import { useState } from 'react'
-import {NetWorkName, nftContractAddress} from '../config'
+import React, { useContext, useMemo, useState, useEffect } from 'react';
+import { Link as ReachLink } from "react-router-dom"
 import { useEthers } from "@usedapp/core";
 import {
   ChakraProvider,
   Text as ChackraText,
   Box,
   Link,
-  SimpleGrid,
+  Flex,
 } from "@chakra-ui/react";
+import { ethers } from "ethers";
+import detectEthereumProvider from "@metamask/detect-provider";
 import Layout from "../components/Layout";
 import ActionButton from '../components/ActionButton';
 import MarketLogos from '../components/MarketLogos';
@@ -21,14 +22,12 @@ import {
   MintStatusText,
   ErrorText
 } from '../components/Typography';
-import { Flex } from "@chakra-ui/react";
-import theme from "../theme";
-import {checkCorrectNetwork, getSignContract} from '../utils';
-import { Link as ReachLink } from "react-router-dom"
-
+import Prices from '../components/Prices';
 import { AppContext } from "../Router";
-import { ethers } from "ethers";
-import detectEthereumProvider from "@metamask/detect-provider";
+import theme from "../theme";
+import { checkCorrectNetwork, getSignContract, isMobileDevice } from '../utils';
+import { NetWorkName, nftContractAddress, metamaskAppDeepLink } from '../config'
+import { MESSAGES, ROUTES } from './constants';
 
 import type { TSignContact } from '../types';
 
@@ -36,23 +35,30 @@ const Landing = () => {
   const [miningStatus, setMiningStatus] = useState(0)
   const [miningStatusMsg, setMiningStatusMsg] = useState('')
   const [loadingState, setLoadingState] = useState(0)
-  const [correctNetworkMsg, setCorrectNetworkMsg] = useState('')
-  const [txError] = useState(null)
+  const [connectionMsg, setConnectionMsg] = useState('')
   const { account } = useEthers();
 
   const { refetchUserPapers, appData, refetchAppData } = useContext(AppContext);
 
+  useEffect(() => {
+    if (isMobileDevice()) {
+      connectWallet();
+    }
+  }, [])
 
   // Calls Metamask to connect wallet on clicking Connect Wallet button
   const connectWallet = async () => {
-    setCorrectNetworkMsg('')
+    setConnectionMsg('')
 
     try {
       const provider: any = await detectEthereumProvider();
       const correctNetwork = await checkCorrectNetwork()
 
+      if (!provider) { 
+        setConnectionMsg(MESSAGES.GET_META)
+      }
       if (!correctNetwork) { 
-        setCorrectNetworkMsg(`Change your network to ${NetWorkName}`)
+        setConnectionMsg(`Change your network to ${NetWorkName}`)
       }
 
       else if (provider) {
@@ -63,7 +69,7 @@ const Landing = () => {
         window.location.reload();
       }
     } catch (error) {
-      setCorrectNetworkMsg(`Error connecting to metamask`)
+      setConnectionMsg(MESSAGES.CONNECT_ERROR)
     }
   }
 
@@ -87,7 +93,7 @@ const Landing = () => {
       const correctNetwork = await checkCorrectNetwork()
 
       if (!correctNetwork) {
-        setCorrectNetworkMsg(`Change your network to ${NetWorkName}`)
+        setConnectionMsg(`Change your network to ${NetWorkName}`)
         return;
       }
 
@@ -104,20 +110,28 @@ const Landing = () => {
         setLoadingState(1)
         setMiningStatusMsg(`Mined! ${tx}`)
         setMiningStatus(1)
-        let event = tx.events[0]
-
         setMiningStatusMsg('')
         refetchUserPapers();
         refetchAppData();
         // `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTx.hash}`
       } else {
-        console.log("Ethereum object doesn't exist!")
+        console.log(MESSAGES.ETH_ERROR)
       }
     } catch (error) {
-      console.log('Error minting character', error)
+      console.log(MESSAGES.MINT_ERROR, error)
       // setTxError(error.message)
     }
   }
+
+  const renderConnectButton = isMobileDevice() ?
+    ( 
+      <a href={metamaskAppDeepLink}>
+        <ActionButton text={MESSAGES.CONNECT_WALLET} />
+      </a>
+    ) : 
+      <ActionButton
+        handleAction={connectWallet}
+        text={MESSAGES.CONNECT_WALLET} />
 
   return (
     <ChakraProvider theme={theme}>
@@ -130,61 +144,41 @@ const Landing = () => {
           White Paper DAO
         </Header>
         <MintedText>#{appData?.numMinted || 0}/ 10,000</MintedText>
-        {!!correctNetworkMsg && (<ErrorText>{correctNetworkMsg}</ErrorText>)}
+        {!!connectionMsg && (<ErrorText>{connectionMsg}</ErrorText>)}
         <Flex paddingBottom="30px">
-          {!account ? (
-            <>
-              <ActionButton
-                handleAction={connectWallet}
-                text='Connect your Wallet'/>
-            </>
-            ) : 
+          {!account ? renderConnectButton : 
             (
-            <Flex
-              marginTop="65px"
-              marginRight="40px">
-              <ChackraText color="gray.400" marginRight="5px">
-                {account &&
-                  `${account.slice(0, 6)}...${account.slice(
-                    account.length - 4,
-                    account.length
-                  )}`
-                }
-              </ChackraText>
-            </Flex>
+              <Flex
+                marginTop="65px"
+                marginRight="40px">
+                <ChackraText color="gray.400" marginRight="5px">
+                  {account &&
+                    `${account.slice(0, 6)}...${account.slice(
+                      account.length - 4,
+                      account.length
+                    )}`
+                  }
+                </ChackraText>
+              </Flex>
             )
           }
 
           {account &&
-          <ActionButton
-            handleAction={mintCharacter}
-            text='Mint'/>}
+            <ActionButton
+              handleAction={mintCharacter}
+              text='Mint'/>}
         </Flex>
 
-        <SubText>No trees were harmed in the minting of this paper</SubText>
-        <Box mt={4}>
-          <SimpleGrid columns={2} gap={10}>
-            <Box pr={5}>
-              <SubText>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 – 1000 – Free mint + gas<br/>
-                1001 – 2000 – 1.0 MATIC + gas<br/>
-                2001 – 3000 – 2.0 MATIC + gas<br/>
-                3001 – 4000 – 3.0 MATIC + gas<br/>
-                &nbsp;4001 – 5000 – 4.0 MATIC + gas<br/>
-              </SubText>
-            </Box>
-            <Box pl={5}>
-              <SubText>
-                5001 – 6000 – 5.0 MATIC + gas<br/>
-                6001 – 7000 – 6.0 MATIC + gas<br/>
-                7001 – 8000 – 7.0 MATIC + gas<br/>
-                8001 – 9000 – 8.0 MATIC + gas<br/>
-                &nbsp;9001 – 10000 – 9.0 MATIC + gas<br/>
-              </SubText>
-            </Box>
-          </SimpleGrid>
-        </Box>
-        {miningStatusMsg && <MintStatusText>{miningStatusMsg}</MintStatusText>}
+        <SubText>
+          {MESSAGES.NO_HARM}
+        </SubText>
+        <Prices />
+        {miningStatusMsg && (
+            <MintStatusText>
+              {miningStatusMsg}
+            </MintStatusText>
+          )
+        }
         {!!miningStatus && (
             <Link
               px={2}
@@ -194,11 +188,11 @@ const Landing = () => {
                 textDecoration: 'none',
               }}
               as={ReachLink}
-              to='/editor'>
+              to={ROUTES.EDIT}>
               <Flex mt={3}>
                 <Box mt={2}>
                   <LinkText>
-                    CONGRATS! NOW YOU CAN TYPE ON YOUR WHITE PAPER {'>'}{'>'}
+                    {MESSAGES.CONGRATS}
                   </LinkText>
                 </Box>
               </Flex>
