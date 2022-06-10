@@ -5,7 +5,7 @@ export const MESSAGES = {
   CONNECT_ERROR: 'Error connecting',
   GET_META: 'Get MetaMask!',
   CONGRATS: `CONGRATS! NOW YOU CAN TYPE ON YOUR WHITE PAPER >>`,
-  NO_HARM: 'No trees were harmed in the minting of this paper',
+  NO_HARM: '* No trees are harmed in the minting of these papers',
 }
 
 export const ROUTES = {
