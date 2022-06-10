@@ -35,16 +35,14 @@ export interface AssetMetaData {
 
 export function getPaperMetadata(paper: Paper): AssetMetaData | null {
   const url = paper.paper;
+  const splitedUrl = url.split("data:application/json;base64,")
+  const base64string = splitedUrl[1]
+  const decodedData = base64.decode(base64string);
   try {
-    const splitedUrl = url.split("data:application/json;base64,")
-    const base64string = splitedUrl[1]
-    const decodedData = base64.decode(base64string);
-
     return JSON.parse(decodedData);
   }
-  catch (e) {
-    console.error(e)
-    return  null
+  catch (error) {
+    console.error("Failed to parse JSON String:", {error, decodedData});
+    return null;
   }
-
 }
