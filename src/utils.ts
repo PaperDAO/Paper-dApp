@@ -61,10 +61,11 @@ export function isMobileDevice() {
 
 // based on this https://github.com/MetaMask/metamask-mobile/issues/3855
 export function openMetaMaskUrl(url:string) {
-  const a = document.createElement("a");
-  a.href = url;
-  a.target = "_self";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  // const a = document.createElement("a");
+  // a.href = url;
+  // a.target = "_self";
+  // document.body.appendChild(a);
+  // a.click();
+  // a.remove();
+  window.location.href = url;
 }
