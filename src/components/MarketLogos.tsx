@@ -14,11 +14,19 @@ export default function MarketLogos({ nftContractAddress }: MarketLogosProps) {
     <Stack
       marginTop={75}
       direction='row'
-      width={400}
+      width='100%'
       background="gray.200"
       px={6}
-      py={2}
+      py={6}
       justifyContent='space-evenly'>
+      <Link isExternal href={`https://twitter.com/whitepaper_dao`}>
+        <Image
+          boxSize='50px'
+          objectFit='cover'
+          src={twitterLogo}
+          alt='rar'
+        />
+      </Link>
       <Link
         href={`https://testnets.opensea.io/collection/whitepaper-zew70fojy4`}
         isExternal
@@ -30,21 +38,7 @@ export default function MarketLogos({ nftContractAddress }: MarketLogosProps) {
         alt='OpenSea'
       />
     </Link>
-    <Link
-      isExternal
-      href={`https://twitter.com/whitepaper_dao`}
-    >
-      <Image
-        boxSize='50px'
-        objectFit='cover'
-        src={twitterLogo}
-        alt='rar'
-      />
-    </Link>
-    <Link
-      isExternal
-      href={`https://thegraph.com/hosted-service/subgraph/paperdao/whitepaper`}
-    >
+    <Link isExternal href={`https://thegraph.com/hosted-service/subgraph/paperdao/whitepaper`}>
       <Image
         boxSize='50px'
         objectFit='cover'
