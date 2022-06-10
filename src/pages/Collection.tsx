@@ -90,7 +90,7 @@ const Collection: any = () => {
           <Box key={index} w='250px' pt={2} onClick={() => onModalOpen(item, base64data)}>
             <SubTextLfSm>{sliceAccount(item.owner)}</SubTextLfSm>
             <Box cursor="pointer" h='50px'>
-              <SubTextLfSm>{item?.paperTitle || "no title"}</SubTextLfSm>
+              <SubTextLfSm>{item?.paperTitle || "[no title]"}</SubTextLfSm>
             </Box>
             <img src={`data:image/svg+xml;base64,${base64data}`} />
           </Box>
