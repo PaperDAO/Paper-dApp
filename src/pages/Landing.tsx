@@ -41,7 +41,7 @@ const Landing = () => {
   const { refetchUserPapers, appData, refetchAppData } = useContext(AppContext);
 
   useEffect(() => {
-    if (isMobileDevice()) {
+    if (window.ethereum && isMobileDevice()) {
       connectWallet();
     }
   }, [])
