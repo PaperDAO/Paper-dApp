@@ -43,9 +43,6 @@ const Collection: any = () => {
         });
 
        let whitepapers = res?.whitepapers || [];
-       console.log("whitepapers?.BEFORE")
-       console.log(whitepapers?.length)
-       console.log(whitepapers)
         whitepapers =  whitepapers.map((paper: Paper) => {
             const metadata = getPaperMetadata(paper);
 
@@ -54,9 +51,6 @@ const Collection: any = () => {
                 metadata: metadata || {}
             }
         });
-      console.log("whitepapers after")
-      console.log(whitepapers)
-      console.log(whitepapers?.length)
     return whitepapers;
   })
 
