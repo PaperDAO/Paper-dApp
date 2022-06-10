@@ -184,6 +184,11 @@ const Editor = () => {
               }}
               placeholder='Text editor'>
             </Textarea>
+            
+            <Box>
+              * Immutable: Once written, this paper can never be changed!
+            </Box>
+
             <Box marginBottom="40px">
               <ActionButton
                 handleAction={handleWriteAction}
