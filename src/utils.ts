@@ -58,3 +58,12 @@ export function getPaperMetadata(paper: Paper): AssetMetaData | null {
 export function isMobileDevice() {
   return 'ontouchstart' in window || 'onmsgesturechange' in window;
 }
+
+export function openMetaMaskUrl(url:string) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.target = "_self";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
