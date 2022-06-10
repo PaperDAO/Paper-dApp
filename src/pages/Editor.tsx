@@ -53,11 +53,13 @@ async function updateOpenseanMetadata(paper: Paper | undefined) {
 
 const Editor = () => {
   const [value, setValue] = useState('')
+  const [isValid, setIsValid] = useState(true)
   const [pageName, setPageName] = useState('')
   const [miningStatusMsg, setMiningStatusMsg] = useState('')
   const [resultMsg, setResultMsg] = useState('')
   const {userPapers, appData, refetchAppData, refetchUserPapers} = useContext(AppContext);
   const [currentTokenId, setCurrentTokenId] = useState<string>();
+  const MAX_LINES = 31;
 
   const handleInputChange = (e:any) => {
     let inputValue = e.target.value;
@@ -78,8 +80,8 @@ const Editor = () => {
     let valueArray = value.split("\n");
     valueArray  = flatten(valueArray.map(line => !line ? ' ' : line.replace(/(.{89})/g, "$1\n").split("\n")));
 
-    if (valueArray.length > 31) {
-      setMiningStatusMsg(`Max 31 Lines is allowed`)
+    if (valueArray.length > MAX_LINES) {
+      setMiningStatusMsg(`Max ${MAX_LINES} Lines is allowed`)
       return;
     }
 
@@ -165,7 +167,9 @@ const Editor = () => {
               marginTop="20px"
               width="550px"
               borderWidth="3px"
-              style={{whiteSpace: 'pre-wrap'}}
+              style={{whiteSpace: 'pre-wrap',
+                borderColor: isValid ? 'inherit': 'red'
+              }}
               value={value}
               _hover={{
                 borderColor: "blue.100",
@@ -178,6 +182,11 @@ const Editor = () => {
               }}
               color="gray.500"
               onChange={handleInputChange}
+              onKeyUp={(evt: any) => {
+                let lines = evt.target.value.split(/\r\n|\r|\n/).length;
+                // (lines > MAX_LINES) ? evt.target.classList.add("error") : evt.target.classList.remove("error");
+                setIsValid(lines <= MAX_LINES)
+              }}
               placeholder='Text editor'>
             </Textarea>
             <Box marginBottom="40px">
