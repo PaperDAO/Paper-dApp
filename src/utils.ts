@@ -37,12 +37,15 @@ export function getPaperMetadata(paper: Paper): AssetMetaData | null {
   const url = paper.paper;
   const splitedUrl = url.split("data:application/json;base64,")
   const base64string = splitedUrl[1]
-  const decodedData = base64.decode(base64string);
+  let decodedData = base64.decode(base64string);
+  //Escape Special JSON Characters
+  decodedData = decodedData.replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t");
+  
   try {
     return JSON.parse(decodedData);
   }
   catch (error) {
-    console.error("Failed to parse JSON String:", {error, decodedData});
+    console.error("Failed to parse JSON String:", {error, decodedData, base64string, paper});
     return null;
   }
 }
