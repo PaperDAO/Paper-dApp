@@ -66,15 +66,11 @@ const Editor = () => {
     setValue(inputValue)
   }
 
-
-
-
   const handlePageNameChanged = (e: any) => {
     setPageName(e.target.value)
   }
 
   const currentPaper =  !!userPapers?.length ? userPapers.find((paper: Paper) => paper.id === currentTokenId?.toString()) : undefined;
-
 
   const handleWriteAction = async() => {
     let valueArray = value.split("\n");
@@ -107,7 +103,6 @@ const Editor = () => {
     if (userPapers?.length === 1) {
       setCurrentTokenId("1");
     }
-
   }, [userPapers]);
 
   const RenderSvg = ({ image_data }: { image_data: string }) => {
@@ -117,50 +112,51 @@ const Editor = () => {
     return <img src={`data:image/svg+xml;base64,${base64data}`} />
   }
 
-
   return (
     <ChakraProvider theme={theme}>
       <Layout>
         <Header>Typewriter Paper</Header>
-        <MintedText>#{appData?.numEdited || 0}/10000 written</MintedText>
+        <MintedText>{appData?.numEdited || 0}/10000 written</MintedText>
 
-        <Select borderWidth="3px" width="50%" placeholder='Select Whitepaper you own..' onChange={handleWhitepaperSelected} value={currentTokenId}>
+        <Select borderWidth="3px" width="550px" placeholder='Select Whitepaper you own..' onChange={handleWhitepaperSelected} value={currentTokenId}>
           {userPapers?.length && userPapers.map(paper => <option  key={paper.id} value={paper.id}>Whitepaper #{paper.id} {!!paper.paperTitle && ` - ${paper.paperTitle}` }</option>)}
         </Select>
         
         {currentPaper?.isEdited &&
-          <Box w='60%'  mt={20} onClick={() => {}}>
+          <Box w='550px' mt={4} onClick={() => {}}>
              <Title>{currentPaper?.paperTitle}</Title>
-              <Link href={getOpenseaURL(currentPaper)}
+            <RenderSvg image_data={currentPaper.metadata?.image_data} />
+            <Link href={getOpenseaURL(currentPaper)}
                 isExternal
+                lineHeight={10}
                 _hover={{
                   color: "gray.300",
                   textDecoration: "underline",
                 }}>
-                <LinkText>View on OpenSea: {getOpenseaURL(currentPaper)}</LinkText>
-              </Link>
-            <RenderSvg image_data={currentPaper.metadata?.image_data} />
+                <LinkText>View on OpenSea</LinkText>
+            </Link>
           </Box>
         }
 
         {currentPaper && !currentPaper.isEdited &&
           (<>
             <Input
-                 fontSize="14px"
-                 marginTop="20px"
-                 width="40%"
-                 onChange={handlePageNameChanged}
-                                borderWidth="3px"
-                                value={pageName}
-                                _hover={{
-                                  borderColor: "blue.100",
-                                }}
-                                _active={{
-                                  borderColor: "blue.100",
-                                }}
-                                _focus={{
-                                  borderColor: "blue.100",
-                                }} placeholder={"Paper title"} />
+              fontSize="14px"
+              marginTop="20px"
+              width="550px"
+              borderWidth="3px"
+              value={pageName}
+              _hover={{
+                borderColor: "blue.100",
+              }}
+              _active={{
+                borderColor: "blue.100",
+              }}
+              _focus={{
+                borderColor: "blue.100",
+              }} placeholder={"Paper title"}
+              onChange={handlePageNameChanged}
+            />
             <Textarea
               height="700px"
               fontSize="14px"
