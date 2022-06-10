@@ -1,18 +1,24 @@
 import React, {useContext, useEffect} from "react";
 import { useState } from "react";
 import styled from 'styled-components'
+import  { flatten } from 'lodash'
+import axios from "axios";
 import { Box, ChakraProvider, Input, Select, Text, Link, Textarea } from "@chakra-ui/react";
 import theme from "../theme";
 import Layout from "../components/Layout";
-import { Header, MintedText, SubText, MintStatusText, ResultTxt, LinkText } from '../components/Typography';
+import {
+  Header,
+  LinkText,
+  MintedText,
+  MintStatusText,
+  SubText,
+} from '../components/Typography';
 import ActionButton from '../components/ActionButton';
 import { getSignContract} from "../utils";
-import "@fontsource/inter";
-import  {flatten} from 'lodash'
-import type { TSignContact } from '../types';
 import { AppContext, Paper } from "../Router";
-import {nftContractAddress} from "../config";
-import axios from "axios";
+import { nftContractAddress } from "../config";
+import type { TSignContact } from '../types';
+import "@fontsource/inter";
 
 const Title = styled.div`
   color: #cacbcc;
@@ -103,7 +109,8 @@ const Editor = () => {
   }, [userPapers]);
 
   const RenderSvg = ({ image_data }: { image_data: string }) => {
-    const buff = new Buffer(image_data);
+    if (!image_data) return null;
+    const buff = Buffer.from(image_data);
     const base64data = buff.toString('base64');
     return <img src={`data:image/svg+xml;base64,${base64data}`} />
   }
@@ -118,7 +125,7 @@ const Editor = () => {
         <Select borderWidth="3px" width="50%" placeholder='Select Whitepaper you own..' onChange={handleWhitepaperSelected} value={currentTokenId}>
           {userPapers?.length && userPapers.map(paper => <option  key={paper.id} value={paper.id}>Whitepaper #{paper.id} {!!paper.paperTitle && ` - ${paper.paperTitle}` }</option>)}
         </Select>
-
+        
         {currentPaper?.isEdited &&
           <Box w='60%'  mt={20} onClick={() => {}}>
              <Title>{currentPaper?.paperTitle}</Title>

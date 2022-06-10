@@ -43,6 +43,9 @@ const Collection: any = () => {
         });
 
        let whitepapers = res?.whitepapers || [];
+       console.log("whitepapers?.BEFORE")
+       console.log(whitepapers?.length)
+       console.log(whitepapers)
         whitepapers =  whitepapers.map((paper: Paper) => {
             const metadata = getPaperMetadata(paper);
 
@@ -51,6 +54,9 @@ const Collection: any = () => {
                 metadata: metadata || {}
             }
         });
+      console.log("whitepapers after")
+      console.log(whitepapers)
+      console.log(whitepapers?.length)
     return whitepapers;
   })
 
@@ -81,9 +87,11 @@ const Collection: any = () => {
         const base64data = buff.toString('base64');
 
         images.push(
-          <Box key={index} w='200px' onClick={() => onModalOpen(item, base64data)}>
+          <Box key={index} w='250px' pt={2} onClick={() => onModalOpen(item, base64data)}>
             <SubTextLfSm>{sliceAccount(item.owner)}</SubTextLfSm>
-            <SubTextLfSm>{item?.paperTitle || "no title"}</SubTextLfSm>
+            <Box cursor="pointer" h='50px'>
+              <SubTextLfSm>{item?.paperTitle || "no title"}</SubTextLfSm>
+            </Box>
             <img src={`data:image/svg+xml;base64,${base64data}`} />
           </Box>
         )
@@ -91,7 +99,7 @@ const Collection: any = () => {
     })
 
     return (
-      <SimpleGrid columns={4} gap={8}>
+      <SimpleGrid columns={[1, 2, 3, 4, 5]} gap={4}>
         {images}
       </SimpleGrid>
     )
