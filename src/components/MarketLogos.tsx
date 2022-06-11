@@ -4,6 +4,7 @@ import osLogo from '../media/opensea.png';
 import rarLogo from '../media/looksrare.png'; 
 import graphLogo from '../media/graph.png'; 
 import twitterLogo from '../media/twitter.png'; 
+import githubLogo from '../media/github.svg'; 
 
 type MarketLogosProps = {
   nftContractAddress: any;
@@ -45,14 +46,24 @@ export default function MarketLogos({ nftContractAddress }: MarketLogosProps) {
           alt='OpenSea'
         />
       </Link>
+      <Link isExternal href={`https://github.com/PaperDAO`}>
+        <Image
+          boxSize='50px'
+          objectFit='cover'
+          src={githubLogo}
+          alt='GitHub'
+        />
+      </Link>
+      
       <Link isExternal href={`https://thegraph.com/hosted-service/subgraph/paperdao/whitepaper`}>
         <Image
           boxSize='50px'
           objectFit='cover'
           src={graphLogo}
-          alt='rar'
+          alt='Graph'
         />
       </Link>
+
     </Stack>
   </Box>
   )
