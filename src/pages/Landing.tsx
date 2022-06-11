@@ -25,7 +25,7 @@ import {
 import Prices from '../components/Prices';
 import { AppContext } from "../Router";
 import theme from "../theme";
-import { checkCorrectNetwork, getSignContract, isMobileDevice } from '../utils';
+import { checkCorrectNetwork, getSignContract, isMobileDevice, openMetaMaskUrl } from '../utils';
 import { NetWorkName, nftContractAddress, metamaskAppDeepLink } from '../config'
 import { MESSAGES, ROUTES } from './constants';
 
@@ -52,11 +52,14 @@ const Landing = () => {
 
     try {
       const provider: any = await detectEthereumProvider();
-      const correctNetwork = await checkCorrectNetwork()
-
+      
       if (!provider) { 
         setConnectionMsg(MESSAGES.GET_META)
+        return;
       }
+
+      const correctNetwork = await checkCorrectNetwork()
+
       if (!correctNetwork) { 
         setConnectionMsg(`Change your network to ${NetWorkName}`)
       }
@@ -125,9 +128,9 @@ const Landing = () => {
 
   const renderConnectButton = isMobileDevice() ?
     ( 
-      <a href={metamaskAppDeepLink}>
-        <ActionButton text={MESSAGES.CONNECT_WALLET} />
-      </a>
+      <ActionButton
+        handleAction={() => openMetaMaskUrl(metamaskAppDeepLink)}
+        text={MESSAGES.CONNECT_WALLET} />
     ) : 
       <ActionButton
         handleAction={connectWallet}
