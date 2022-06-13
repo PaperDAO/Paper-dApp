@@ -144,7 +144,7 @@ const Landing = () => {
         </Header>
         <Text>By</Text>
         <Header>
-          White Paper DAO
+          Whitepaper DAO
         </Header>
         <MintedText>#{appData?.numMinted || 0}/ 10,000</MintedText>
         {!!connectionMsg && (<ErrorText>{connectionMsg}</ErrorText>)}
