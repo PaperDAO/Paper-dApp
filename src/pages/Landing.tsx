@@ -143,11 +143,12 @@ const Landing = () => {
           White Paper
         </Header>
         <Text>By</Text>
-        <Header>
-          Whitepaper DAO
-        </Header>
-        <MintedText>#{appData?.numMinted || 0}/ 10,000</MintedText>
+        <Header>Whitepaper DAO</Header>
+        <MintedText>Minted {appData?.numMinted || 0}/ 10,000</MintedText>
         {!!connectionMsg && (<ErrorText>{connectionMsg}</ErrorText>)}
+
+        <Text>[EMPTY PAPER IMAGE]</Text>
+
         <Flex paddingBottom="30px">
           {!account ? renderConnectButton : 
             (
