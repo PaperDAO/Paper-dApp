@@ -19,24 +19,27 @@ export default function ConnectButton({ handleOpenModal }: Props) {
     <Box
       display="flex"
       alignItems="center"
-      background="gray.700"
+      background="white"
       borderRadius="xl"
       py="0"
-    >
+      mx="0"
+      my="auto"
+      classname="connect-button"
+      >
       <Box px="3">
-        <Text color="white" fontSize="md">
+        <Text color="gray.400" fontSize="md">
           {etherBalance && parseFloat(formatEther(etherBalance)).toFixed(3)} ETH
         </Text>
       </Box>
       <Button
         onClick={handleOpenModal}
-        bg="gray.800"
+        bg="gray.400"
         border="1px solid transparent"
         _hover={{
           border: "1px",
           borderStyle: "solid",
           borderColor: "blue.400",
-          backgroundColor: "gray.700",
+          backgroundColor: "gray.500",
         }}
         borderRadius="xl"
         m="1px"
@@ -55,19 +58,20 @@ export default function ConnectButton({ handleOpenModal }: Props) {
   ) : (
     <Button
       onClick={handleConnectWallet}
-      bg="blue.800"
-      color="blue.300"
+      mx="0"
+      my="auto"
+      bg="white"
+      color="gray.500"
       fontSize="lg"
       fontWeight="medium"
       borderRadius="xl"
       border="1px solid transparent"
       _hover={{
-        borderColor: "blue.700",
-        color: "blue.400",
+        borderColor: "gray.300",
+        color: "gray.600",
       }}
       _active={{
-        backgroundColor: "blue.800",
-        borderColor: "blue.700",
+        borderColor: "blue.100",
       }}
     >
       Connect to a wallet

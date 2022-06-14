@@ -13,6 +13,7 @@ import {
 import { Link as ReachLink } from "react-router-dom"
 import { AppContext } from "../Router";
 import Icon from './Icon';
+import ConnectButton from '../components/ConnectButton';
 import closeIcon from '../media/close.svg';
 import menuIcon from '../media/menu.svg';
 
@@ -73,7 +74,12 @@ export default function Layout({ children }: Props) {
   ));
 
   const renderNavBar = (
-    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+    <Box 
+      bg={useColorModeValue('gray.100', 'gray.900')} 
+      px={4} 
+      display="flex"
+      justifyContent="space-between"
+      >
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
           size={'md'}
@@ -104,6 +110,9 @@ export default function Layout({ children }: Props) {
           </Stack>
         </Box>
       ) : null}
+
+      <ConnectButton handleOpenModal={false}/>
+
     </Box>
   );
 
