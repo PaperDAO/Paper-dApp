@@ -25,11 +25,11 @@ export default function ActionButton({
         color: "blue.100",
       }}
       size='lg'
-      marginTop="50px"
       marginRight="20px"
       variant='outline'
       width={width}
-      color="gray.300"
+      color="gray.400"
+      borderColor="gray.300"
     >
       {text}
     </Button>

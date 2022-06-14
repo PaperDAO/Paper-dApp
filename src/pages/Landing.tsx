@@ -147,13 +147,16 @@ const Landing = () => {
         <MintedText>Minted {appData?.numMinted || 0}/ 10,000</MintedText>
         {!!connectionMsg && (<ErrorText>{connectionMsg}</ErrorText>)}
 
-        <Text>[EMPTY PAPER IMAGE]</Text>
+        <Box maxWidth="500px" my="5">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMjQ5NCcgaGVpZ2h0PSczNTIzJyB2aWV3Qm94PScwIDAgMjQ5NCAzNTIzJyBmaWxsPSdub25lJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPiA8ZyBmaWx0ZXI9J3VybCgjZmlsdGVyMF9kXzE4MTVfMjAwNzUpJz4gPHBhdGggZD0nTTAgMC41SDI0ODBWMzUwOC41SDE4NC42NDJMMCAzMzA5Ljc5VjAuNVonIGZpbGw9J3doaXRlJy8+IDxwYXRoIGQ9J00xODcuMTQyIDMzMDkuNzlWMzMwNy4yOUgxODQuNjQySDIuNVYzSDI0NzcuNVYzNTA2SDE4Ny4xNDJWMzMwOS43OVpNMTgyLjE0MiAzMzEyLjI5VjM1MDIuMTRMNS43MzU1NiAzMzEyLjI5SDE4Mi4xNDJaJyBzdHJva2U9JyNBM0ExQTEnIHN0cm9rZS13aWR0aD0nNScvPiA8L2c+IDxkZWZzPiA8ZmlsdGVyIGlkPSdmaWx0ZXIwX2RfMTgxNV8yMDA3NScgeD0nMCcgeT0nMC41JyB3aWR0aD0nMjQ5NCcgaGVpZ2h0PSczNTIyJyBmaWx0ZXJVbml0cz0ndXNlclNwYWNlT25Vc2UnIGNvbG9yLWludGVycG9sYXRpb24tZmlsdGVycz0nc1JHQic+IDxmZUZsb29kIGZsb29kLW9wYWNpdHk9JzAnIHJlc3VsdD0nQmFja2dyb3VuZEltYWdlRml4Jy8+PGZlQ29sb3JNYXRyaXggaW49J1NvdXJjZUFscGhhJyB0eXBlPSdtYXRyaXgnIHZhbHVlcz0nMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMTI3IDAnIHJlc3VsdD0naGFyZEFscGhhJy8+IDxmZU9mZnNldCBkeD0nMTAnIGR5PScxMCcvPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249JzInLz4gPGZlQ29tcG9zaXRlIGluMj0naGFyZEFscGhhJyBvcGVyYXRvcj0nb3V0Jy8+IDxmZUNvbG9yTWF0cml4IHR5cGU9J21hdHJpeCcgdmFsdWVzPScwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwLjI1IDAnLz4gPGZlQmxlbmQgbW9kZT0nbm9ybWFsJyBpbjI9J0JhY2tncm91bmRJbWFnZUZpeCcgcmVzdWx0PSdlZmZlY3QxX2Ryb3BTaGFkb3dfMTgxNV8yMDA3NScvPiA8ZmVCbGVuZCBtb2RlPSdub3JtYWwnIGluPSdTb3VyY2VHcmFwaGljJyBpbjI9J2VmZmVjdDFfZHJvcFNoYWRvd18xODE1XzIwMDc1JyByZXN1bHQ9J3NoYXBlJy8+IDwvZmlsdGVyPjwvZGVmcz48L3N2Zz4=" />
 
-        <Flex paddingBottom="30px">
+        </Box>
+
+        <Flex paddingBottom="30px" mt="2">
           {!account ? renderConnectButton : 
             (
               <Flex
-                marginTop="65px"
+                mt="2"
                 marginRight="40px">
                 <ChackraText color="gray.400" marginRight="5px">
                   {account &&
