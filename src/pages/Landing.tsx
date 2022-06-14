@@ -22,7 +22,7 @@ import {
   MintStatusText,
   ErrorText
 } from '../components/Typography';
-import Prices from '../components/Prices';
+// import Prices from '../components/Prices';
 import { AppContext } from "../Router";
 import theme from "../theme";
 import { checkCorrectNetwork, getSignContract, isMobileDevice, openMetaMaskUrl } from '../utils';
@@ -175,7 +175,7 @@ const Landing = () => {
         <SubText>
           {MESSAGES.NO_HARM}
         </SubText>
-        <Prices />
+        {/* <Prices /> */}
         {miningStatusMsg && (
             <MintStatusText>
               {miningStatusMsg}
