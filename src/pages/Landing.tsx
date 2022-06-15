@@ -2,7 +2,6 @@ import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { Link as ReachLink } from "react-router-dom"
 import { useEthers } from "@usedapp/core";
 import {
-  ChakraProvider,
   Text as ChackraText,
   Box,
   Link,
@@ -24,7 +23,6 @@ import {
 } from '../components/Typography';
 // import Prices from '../components/Prices';
 import { AppContext } from "../Router";
-import theme from "../theme";
 import { checkCorrectNetwork, getSignContract, isMobileDevice, openMetaMaskUrl } from '../utils';
 import { NetWorkName, nftContractAddress, metamaskAppDeepLink } from '../config'
 import { MESSAGES, ROUTES } from './constants';
@@ -137,7 +135,6 @@ const Landing = () => {
         text={MESSAGES.CONNECT_WALLET} />
 
   return (
-    <ChakraProvider theme={theme}>
       <Layout>
         <Header>
           White Paper
@@ -207,7 +204,6 @@ const Landing = () => {
         )}
         <MarketLogos nftContractAddress={nftContractAddress} />
       </Layout>
-    </ChakraProvider>
   )
 }
 

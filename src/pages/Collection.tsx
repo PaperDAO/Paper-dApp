@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from 'react';
-import { ChakraProvider, SimpleGrid, Box, Flex, Button, Text, Link } from "@chakra-ui/react";
-import theme from "../theme";
+import { SimpleGrid, Box, Flex, Button, Text, Link } from "@chakra-ui/react";
+
 import Layout from "../components/Layout";
 import { Header, SubTextLfSm } from "../components/Typography";
 import PaperModal from "../components/PaperModal";
@@ -101,7 +101,6 @@ const Collection: any = () => {
 
   console.log('allPapers', allPapers)
   return (
-    <ChakraProvider theme={theme}>
       <Layout>
         <Header>White Paper Collection</Header>
         <Box padding="30px">
@@ -109,7 +108,6 @@ const Collection: any = () => {
         </Box>
         <PaperModal onClose={onClose} isOpen={isOpen} data={selectedItem} svg={selectedSvg} />
       </Layout>
-    </ChakraProvider>
   );
 }
 
