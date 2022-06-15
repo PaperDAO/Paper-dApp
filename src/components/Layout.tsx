@@ -16,6 +16,8 @@ import Icon from './Icon';
 import ConnectButton from '../components/ConnectButton';
 import closeIcon from '../media/close.svg';
 import menuIcon from '../media/menu.svg';
+import MarketLogos from '../components/MarketLogos';
+import { nftContractAddress } from '../config'
 
 type Props = {
   children?: ReactNode;
@@ -127,6 +129,7 @@ export default function Layout({ children }: Props) {
         paddingBottom="50px"
       >
       {children}
+      <MarketLogos nftContractAddress={nftContractAddress} />
     </Flex>
   </div>
   );

@@ -11,7 +11,7 @@ import { ethers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
 import Layout from "../components/Layout";
 import ActionButton from '../components/ActionButton';
-import MarketLogos from '../components/MarketLogos';
+
 import {
   Header,
   Text,
@@ -202,7 +202,7 @@ const Landing = () => {
               </Flex>
             </Link>
         )}
-        <MarketLogos nftContractAddress={nftContractAddress} />
+        
       </Layout>
   )
 }
