@@ -18,7 +18,7 @@ const data = { owner: 'ownerAdressxxxxxx', svg: testSvgWp, title: 'paperTitle' }
 const svgs = [data, data, data, data, data, data];
 
 const Collection: any = () => {
-  const { account, deactivate } = useEthers();
+  // const { account, deactivate } = useEthers();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSvg, setSelectedSvg] = useState('');
   const [selectedItem, setSelectedItem] = useState('');

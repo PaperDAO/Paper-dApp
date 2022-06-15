@@ -113,17 +113,16 @@ const Editor = () => {
   }
 
   return (
-    <ChakraProvider theme={theme}>
       <Layout>
-        <Header>Typewriter Paper</Header>
+        <Header>The Typewriter</Header>
         <MintedText>{appData?.numEdited || 0}/10000 written</MintedText>
 
-        <Select borderWidth="3px" width="550px" placeholder='Select Whitepaper you own..' onChange={handleWhitepaperSelected} value={currentTokenId}>
+        <Select borderWidth="3px" maxWidth="550px" placeholder='Select a White Paper' onChange={handleWhitepaperSelected} value={currentTokenId}>
           {userPapers?.length && userPapers.map(paper => <option  key={paper.id} value={paper.id}>Whitepaper #{paper.id} {!!paper.paperTitle && ` - ${paper.paperTitle}` }</option>)}
         </Select>
         
         {currentPaper?.isEdited &&
-          <Box w='550px' mt={4} onClick={() => {}}>
+          <Box maxWidth='550px' mt={4} onClick={() => {}}>
              <Title>{currentPaper?.paperTitle}</Title>
             <RenderSvg image_data={currentPaper.metadata?.image_data} />
             <Link href={getOpenseaURL(currentPaper)}
@@ -139,7 +138,7 @@ const Editor = () => {
         }
 
         {currentPaper && !currentPaper.isEdited &&
-          (<>
+          (<Box maxWidth="550px">
             <Input
               fontSize="14px"
               marginTop="20px"
@@ -189,7 +188,7 @@ const Editor = () => {
               * Immutable: Once written, this paper can never be changed!
             </Box>
 
-            <Box marginBottom="40px">
+            <Box marginBottom="40px" textAlign="center" mt="6">
               <ActionButton
                 handleAction={handleWriteAction}
                 width="300px"
@@ -197,10 +196,10 @@ const Editor = () => {
             </Box>
             {!!miningStatusMsg && <MintStatusText>{miningStatusMsg}</MintStatusText>}
             {!!resultMsg && <SubText>{resultMsg}</SubText>}
-          </>)
+          </Box>)
         }
       </Layout>
-    </ChakraProvider>
+
   );
 }
 export default Editor;

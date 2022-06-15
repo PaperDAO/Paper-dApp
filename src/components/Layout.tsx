@@ -120,15 +120,15 @@ export default function Layout({ children }: Props) {
 
   return (
     <div>
-      {renderNavBar}
       <Flex
-        paddingTop="40px"
         flexDirection="column"
         alignItems="center"
-        justifyContent="center"
-        paddingBottom="50px"
+        justifyContent="space-between"
+        paddingBottom="0px"
+        minHeight="100vh"
       >
-      {children}
+      <Box width="100%">{renderNavBar}</Box>
+      <Box>{children}</Box>
       <MarketLogos nftContractAddress={nftContractAddress} />
     </Flex>
   </div>

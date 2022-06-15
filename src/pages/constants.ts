@@ -4,7 +4,7 @@ export const MESSAGES = {
   ETH_ERROR: "Ethereum object doesn't exist!",
   CONNECT_ERROR: 'Error connecting',
   GET_META: 'Get MetaMask!',
-  CONGRATS: `CONGRATS! NOW YOU CAN TYPE ON YOUR WHITE PAPER >>`,
+  CONGRATS: `🥳 YOU CAN NOW TYPE ON YOUR WHITE PAPER >>`,
   NO_HARM: '* No trees are harmed in the minting of these papers',
 }
 
