@@ -4,7 +4,7 @@ import { useEthers, useEtherBalance } from "@usedapp/core";
 import { formatEther } from "@ethersproject/units";
 
 type Props = {
-  handleOpenModal: any;
+  handleOpenModal?: any;
 };
 
 export default function ConnectButton({ handleOpenModal }: Props) {
@@ -24,7 +24,7 @@ export default function ConnectButton({ handleOpenModal }: Props) {
       py="0"
       mx="0"
       my="auto"
-      classname="connect-button"
+      className="connect-button"
       >
       <Box px="3">
         <Text color="gray.400" fontSize="md">
