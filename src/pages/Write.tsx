@@ -1,21 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Box, Input, Select, Textarea } from '@chakra-ui/react';
-import theme from '../theme';
 import Layout from '../components/Layout';
 import {
     Header,
-    LinkText,
     MintedText,
     MintStatusText,
     SubText,
 } from '../components/Typography';
 import ActionButton from '../components/ActionButton';
-// import { getContract} from "../utils";
 import { AppContext, Paper } from '../Router';
-import '@fontsource/inter';
+// import '@fontsource/inter';
 import { makeSVG, textToArray, svgImageSrc } from '../helpers/svg';
 import useContract from '../hooks/useContract';
 
