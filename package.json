@@ -19,6 +19,7 @@
     "@usedapp/core": "^0.4.1",
     "axios": "^0.27.2",
     "base-64": "^1.0.0",
+    "dotenv": "^16.0.3",
     "ethers": "^5.4.0",
     "framer-motion": "^4.1.17",
     "graphql-request": "^4.3.0",
@@ -54,6 +55,9 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.25"
+    "@types/styled-components": "^5.1.25",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.31.10"
   }
 }
