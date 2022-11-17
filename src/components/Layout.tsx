@@ -10,7 +10,6 @@ import {
   IconButton,
   useDisclosure,
 } from '@chakra-ui/react';
-import { Link as ReachLink } from "react-router-dom"
 import { AppContext } from "../Router";
 import Icon from './Icon';
 import ConnectButton from '../components/ConnectButton';
@@ -69,6 +68,11 @@ export default function Layout({ children }: Props) {
       link: '/editor',
       isVisible: !!userPapers?.length,
     }, 
+    {
+      label: 'Write',
+      link: '/write',
+      isVisible: true,
+    }, 
   ];
 
   const renderLinks = Links.map(({ link, label, isVisible }) => (
@@ -113,7 +117,7 @@ export default function Layout({ children }: Props) {
         </Box>
       ) : null}
 
-      <ConnectButton handleOpenModal={false}/>
+      <ConnectButton />
 
     </Box>
   );
