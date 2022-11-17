@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { Link as ReachLink } from 'react-router-dom';
 import { useEthers } from '@usedapp/core';
-import { Text as ChackraText, Box, Link, Flex } from '@chakra-ui/react';
+import { Text as ChackraText, Box, Link, Flex, Button } from '@chakra-ui/react';
 import { ethers } from 'ethers';
 import detectEthereumProvider from '@metamask/detect-provider';
 import Layout from '../components/Layout';
@@ -120,9 +120,53 @@ const Landing = () => {
             <Box maxWidth="250px" my="5">
                 <EmptyPage />
             </Box>
-            <Flex paddingBottom="30px" mt="2">
-                {!account ? (
-                    isMobileDevice() ? (
+            <Flex paddingBottom="30px" mt="2" justifyContent="center">
+                {/* {!account && (
+                    <Flex mt="2" marginRight="40px">
+                        <ChackraText color="gray.400" marginRight="5px">
+                            {account &&
+                                `${account.slice(0, 6)}...${account.slice(
+                                    account.length - 4,
+                                    account.length,
+                                )}`}
+                        </ChackraText>
+                    </Flex>
+                )} */}
+                {account && (
+                    <Link
+                        href="/write"
+                        _hover={{
+                            textDecoration: 'none',
+                        }}
+                    >
+                        <Button
+                            width="200px"
+                            fontSize="lg"
+                            fontWeight="bold"
+                            borderWidth="3px"
+                            borderRadius="xl"
+                            border="2px solid transparent"
+                            _hover={{
+                                borderColor: 'blue.100',
+                                color: 'blue.100',
+                                textDecoration: 'none',
+                                underline: 'none',
+                            }}
+                            size="lg"
+                            marginRight="20px"
+                            variant="outline"
+                            color="gray.400"
+                            borderColor="gray.300"
+                        >
+                            Mint your own Paper
+                        </Button>
+                    </Link>
+                )}
+            </Flex>
+            <SubText>{MESSAGES.NO_HARM}</SubText>
+            <Box textAlign="center" mt="10">
+                {!account &&
+                    (isMobileDevice() ? (
                         <ActionButton
                             handleAction={() =>
                                 openMetaMaskUrl(metamaskAppDeepLink)
@@ -134,23 +178,8 @@ const Landing = () => {
                             handleAction={connectWallet}
                             text={MESSAGES.CONNECT_WALLET}
                         />
-                    )
-                ) : (
-                    <Flex mt="2" marginRight="40px">
-                        <ChackraText color="gray.400" marginRight="5px">
-                            {account &&
-                                `${account.slice(0, 6)}...${account.slice(
-                                    account.length - 4,
-                                    account.length,
-                                )}`}
-                        </ChackraText>
-                    </Flex>
-                )}
-                {account && (
-                    <ActionButton handleAction={mintCharacter} text="Mint" />
-                )}
-            </Flex>
-            <SubText>{MESSAGES.NO_HARM}</SubText>
+                    ))}
+            </Box>
             <Box my="5">
                 {miningStatusMsg && (
                     <MintStatusText>{miningStatusMsg}</MintStatusText>

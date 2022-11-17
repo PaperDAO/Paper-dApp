@@ -5,6 +5,7 @@ import {
     AspectRatio,
     Box,
     Button,
+    Text,
     Flex,
     Input,
     NumberDecrementStepper,
@@ -14,6 +15,7 @@ import {
     NumberInputStepper,
     Spacer,
     Textarea,
+    WrapItem,
 } from '@chakra-ui/react';
 import Layout from '../components/Layout';
 import {
@@ -121,6 +123,7 @@ const Write = () => {
                         placeholder="Text"
                         value={value}
                         onChange={(e: any) => setValue(e.target.value)}
+                        resize="none"
                         sx={{
                             width: '100%',
                             height: '93% !important',
@@ -142,66 +145,83 @@ const Write = () => {
                         }}
                     ></Textarea>
                 </AspectRatio>
-                <Box>
+                <Box textAlign="center">
                     * Immutable: Once written, this paper can never be changed!
                 </Box>
 
-                <Flex marginBottom="40px" mt="6" textAlign="center">
-                    <Box>
-                        Preview
+                <WrapItem marginBottom="40px" mt="6" textAlign="center">
+                    {/* <Box>
+                        Live Preview
                         <img
                             width="200"
                             src={svgImageSrc(
                                 makeSVGFromString(value, MAX_LINES),
                             )}
                         />
-                    </Box>
-                    <Box sx={{ width: '100px' }}>
-                        <NumberInput
-                            value={amount}
-                            min={1}
-                            onChange={(_: string, newAmount: number) =>
-                                setAmount(newAmount)
-                            }
+                    </Box> */}
+                    <Box textAlign="center" margin="auto">
+                        <Box
+                            margin="auto"
+                            display="flex"
+                            justifyContent="space-evenly"
                         >
-                            <NumberInputField
+                            <Text
+                                size="lg"
+                                fontSize="xl"
+                                color="gray.400"
+                                lineHeight="10"
+                            >
+                                Amount:
+                            </Text>
+                            <Box>
+                                <NumberInput
+                                    width="100px"
+                                    value={amount}
+                                    min={1}
+                                    onChange={(_: string, newAmount: number) =>
+                                        setAmount(newAmount)
+                                    }
+                                >
+                                    <NumberInputField
+                                        borderColor="gray.300"
+                                        borderWidth="3px"
+                                        borderRadius="xl"
+                                        fontSize="lg"
+                                        variant="outline"
+                                        height="45"
+                                    />
+                                    <NumberInputStepper>
+                                        <NumberIncrementStepper />
+                                        <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                </NumberInput>
+                            </Box>
+                        </Box>
+                        <Spacer height="30px" />
+                        <Box margin="auto">
+                            <Button
+                                margin="auto"
+                                onClick={handleWriteAction}
+                                width="280px"
+                                height={'45'}
+                                fontSize="lg"
+                                fontWeight="bold"
                                 borderColor="gray.300"
                                 borderWidth="3px"
                                 borderRadius="xl"
-                                fontSize="lg"
+                                _hover={{
+                                    borderColor: 'blue.100',
+                                    color: 'blue.100',
+                                }}
+                                size="lg"
                                 variant="outline"
-                                height={'45'}
-                            />
-                            <NumberInputStepper>
-                                <NumberIncrementStepper />
-                                <NumberDecrementStepper />
-                            </NumberInputStepper>
-                        </NumberInput>
+                                color="gray.400"
+                            >
+                                Mint Paper
+                            </Button>
+                        </Box>
                     </Box>
-                    <Spacer />
-                    <Box>
-                        <Button
-                            onClick={handleWriteAction}
-                            width="280px"
-                            height={'45'}
-                            fontSize="lg"
-                            fontWeight="bold"
-                            borderColor="gray.300"
-                            borderWidth="3px"
-                            borderRadius="xl"
-                            _hover={{
-                                borderColor: 'blue.100',
-                                color: 'blue.100',
-                            }}
-                            size="lg"
-                            marginRight="20px"
-                            variant="outline"
-                            color="gray.400"
-                        >
-                            Write to the blockchain
-                        </Button>
-                    </Box>
-                </Flex>
+                </WrapItem>
                 {!!miningStatusMsg && (
                     <MintStatusText>{miningStatusMsg}</MintStatusText>
                 )}

@@ -1,5 +1,5 @@
 export const MESSAGES = {
-	CONNECT_WALLET: 'Connect your Wallet',
+	CONNECT_WALLET: 'Connect Wallet to Mint your own Paper',
 	MINT_ERROR: 'Error minting character',
 	ETH_ERROR: "Ethereum object doesn't exist!",
 	CONNECT_ERROR: 'Error connecting',

@@ -14,7 +14,7 @@ export default function ActionButton({
     return (
         <Button
             onClick={handleAction ? handleAction : () => {}}
-            width={width}
+            minWidth={width}
             fontSize="lg"
             fontWeight="bold"
             borderWidth="3px"
