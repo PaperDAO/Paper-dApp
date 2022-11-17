@@ -1,8 +1,8 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export default extendTheme({
-  fonts: {
-    heading: "Inter",
-    body: "Inter",
-  },
+    fonts: {
+        heading: "Inter",
+        body: "Inter",
+    },
 });

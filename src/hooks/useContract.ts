@@ -2,8 +2,6 @@ import detectEhereumProvider from '@metamask/detect-provider';
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react';
 import NFT from '../abi/paper721.json';
-import { nftContractAddress } from "../config";
-console.log("REACT_ENV_CONTRACT_ADDRESS", process.env.REACT_ENV_CONTRACT_ADDRESS);
 
 /**
  * Hook for working with the contract
@@ -11,12 +9,14 @@ console.log("REACT_ENV_CONTRACT_ADDRESS", process.env.REACT_ENV_CONTRACT_ADDRESS
 export default function useContract() {
   const [contract, setContract] = useState<any>(null);
   
-  const getContract = async () => {
+  const getContract = async (): Promise<any> => {
+    //Vadliate
+    if(!process.env.REACT_APP_CONTRACT_ADDRESS) throw new Error("Missing ENV:CONTRACT_ADDRESS")
     const provider:any  = await detectEhereumProvider();
     const ethProvider =  new ethers.providers.Web3Provider(provider)
     const signer: ethers.Signer = ethProvider.getSigner()
     const nftContract = new ethers.Contract(
-      nftContractAddress,
+      process.env.REACT_APP_CONTRACT_ADDRESS,
       NFT.abi,
       signer
     );
@@ -24,7 +24,7 @@ export default function useContract() {
 
   useEffect(() => {
     getContract().then((res) => {setContract(res);
-      console.warn("Got Contract", res);
+      console.warn("Got Contract", res, {proc:process.env});
     })
     .catch((error) => {
       console.error("Error Fetching Contract", error);
