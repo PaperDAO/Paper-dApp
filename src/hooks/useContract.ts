@@ -15,7 +15,7 @@ export default function useContract() {
     const provider:any  = await detectEhereumProvider();
     const ethProvider =  new ethers.providers.Web3Provider(provider)
     const signer: ethers.Signer = ethProvider.getSigner()
-    const nftContract = new ethers.Contract(
+    return new ethers.Contract(
       process.env.REACT_APP_CONTRACT_ADDRESS,
       NFT.abi,
       signer
@@ -23,12 +23,13 @@ export default function useContract() {
   }
 
   useEffect(() => {
-    getContract().then((res) => {setContract(res);
-      console.warn("Got Contract", res, {proc:process.env});
+    getContract().then((res) => {
+        setContract(res);
+        console.warn("Got Contract", res, {proc:process.env});
     })
     .catch((error) => {
-      console.error("Error Fetching Contract", error);
-      setContract(null);
+        console.error("Error Fetching Contract", error);
+        setContract(null);
     });
   },[]);
 

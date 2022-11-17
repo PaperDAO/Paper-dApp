@@ -13,7 +13,12 @@ import {
 import ActionButton from '../components/ActionButton';
 import { AppContext, Paper } from '../Router';
 // import '@fontsource/inter';
-import { makeSVG, textToArray, svgImageSrc } from '../helpers/svg';
+import {
+    makeSVG,
+    textToArray,
+    svgImageSrc,
+    makeSVGFromString,
+} from '../helpers/svg';
 import useContract from '../hooks/useContract';
 
 const Title = styled.div`
@@ -63,8 +68,6 @@ const Write = () => {
               (paper: Paper) => paper.id === currentTokenId?.toString(),
           )
         : undefined;
-    const handlePageNameChanged = (e: any) => setPageName(e.target.value);
-    const handleInputChange = (e: any) => setValue(e.target.value);
 
     const handleWriteAction = async (): Promise<void> => {
         let valueArray = textToArray(value, MAX_LINES);
@@ -112,9 +115,9 @@ const Write = () => {
     return (
         <Layout>
             <Header>The Typewriter</Header>
-            <MintedText>{appData?.numEdited || 0}/10000 written</MintedText>
+            {/* <MintedText>{appData?.numEdited || 0}/10000 written</MintedText> */}
 
-            <Select
+            {/* <Select
                 borderWidth="3px"
                 maxWidth="550px"
                 placeholder="Select a White Paper"
@@ -128,7 +131,7 @@ const Write = () => {
                             {!!paper.paperTitle && ` - ${paper.paperTitle}`}
                         </option>
                     ))}
-            </Select>
+            </Select> */}
             <Box maxWidth="550px">
                 <Input
                     fontSize="14px"
@@ -146,15 +149,20 @@ const Write = () => {
                         borderColor: 'blue.100',
                     }}
                     placeholder={'Paper title'}
-                    onChange={handlePageNameChanged}
+                    onChange={(e: any) => setPageName(e.target.value)}
                 />
                 <Textarea
-                    height="700px"
-                    fontSize="14px"
-                    marginTop="20px"
-                    width="550px"
-                    borderWidth="3px"
-                    style={{
+                    sx={{
+                        color: 'gray.500',
+                        backgroundImage: 'url(/images/whitepaper.svg)',
+                        backgroundSize: 'cover',
+                        border: 'none',
+                        borderRadius: 0,
+                        height: '30.4vw',
+                        fontSize: '14px',
+                        marginTop: '20px',
+                        width: '550px',
+                        borderWidth: '3px',
                         whiteSpace: 'pre-wrap',
                         borderColor: isValid ? 'inherit' : 'red',
                     }}
@@ -168,8 +176,7 @@ const Write = () => {
                     _focus={{
                         borderColor: 'blue.100',
                     }}
-                    color="gray.500"
-                    onChange={handleInputChange}
+                    onChange={(e: any) => setValue(e.target.value)}
                     onKeyUp={(evt: any) => {
                         let lineCount =
                             evt.target.value.split(/\r\n|\r|\n/).length;
@@ -198,14 +205,7 @@ const Write = () => {
                 BOX
                 <img
                     width="500"
-                    src={svgImageSrc(
-                        makeSVG([
-                            'line 1',
-                            '',
-                            '       line 3',
-                            '...     ...  line 4',
-                        ]),
-                    )}
+                    src={svgImageSrc(makeSVGFromString(value, MAX_LINES))}
                 />
             </Box>
         </Layout>
