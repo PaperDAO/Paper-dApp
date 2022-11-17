@@ -14,7 +14,7 @@ import {
   SubText,
 } from '../components/Typography';
 import ActionButton from '../components/ActionButton';
-import { getSignContract} from "../utils";
+import { getContract} from "../utils";
 import { AppContext, Paper } from "../Router";
 import { nftContractAddress } from "../config";
 import type { TSignContact } from '../types';
@@ -81,7 +81,7 @@ const Editor = () => {
       return;
     }
 
-    const { nftContract }: TSignContact = await getSignContract()
+    const { nftContract }: TSignContact = await getContract()
     let nftTx = await nftContract.typewrite(Number(currentTokenId),pageName, valueArray)
     setMiningStatusMsg(`Writing to blockchain....`)
     await nftTx.wait(2)

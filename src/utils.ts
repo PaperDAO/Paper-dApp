@@ -1,7 +1,7 @@
 import detectEhereumProvider from '@metamask/detect-provider';
 import {NetWorkId, nftContractAddress} from './config'
 import { ethers } from 'ethers'
-import NFT from './Whitepaper.json';
+import NFT from './abi/paper721.json';
 import {Paper} from "./Router";
 // @ts-ignore
 import base64 from "base-64";
@@ -19,17 +19,15 @@ export const checkCorrectNetwork = async () => {
   return chainId === NetWorkId;
 }
 
-export async function getSignContract(){
+export async function getContract(){
   const provider:any  = await detectEhereumProvider();
   const ethProvider =  new ethers.providers.Web3Provider(provider)
-
   const signer: ethers.Signer = ethProvider.getSigner()
   const nftContract = new ethers.Contract(
     nftContractAddress,
     NFT.abi,
     signer
   )
-
   return { signer, nftContract }
 }
 

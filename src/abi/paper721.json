@@ -1,7 +1,7 @@
 {
   "_format": "hh-sol-artifact-1",
-  "contractName": "Whitepaper",
-  "sourceName": "contracts/Whitepaper.sol",
+  "contractName": "Paper721",
+  "sourceName": "contracts/Paper721.sol",
   "abi": [
     {
       "inputs": [],
