@@ -43,7 +43,6 @@ export function getPaperMetadata(paper: Paper): AssetMetaData | null {
   let decodedData = base64.decode(base64string);
   //Escape Special JSON Characters
   decodedData = decodedData.replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t");
-  
   try {
     return JSON.parse(decodedData);
   }

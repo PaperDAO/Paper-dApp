@@ -1,9 +1,8 @@
 import React, {useContext, useEffect} from "react";
 import { useState } from "react";
 import styled from 'styled-components'
-import  { flatten } from 'lodash'
 import axios from "axios";
-import { Box, ChakraProvider, Input, Select, Text, Link, Textarea } from "@chakra-ui/react";
+import { Box, Input, Select, Textarea } from "@chakra-ui/react";
 import theme from "../theme";
 import Layout from "../components/Layout";
 import {
@@ -119,23 +118,6 @@ const Write = () => {
         <Select borderWidth="3px" maxWidth="550px" placeholder='Select a White Paper' onChange={handleWhitepaperSelected} value={currentTokenId}>
           {userPapers?.length && userPapers.map(paper => <option  key={paper.id} value={paper.id}>Whitepaper #{paper.id} {!!paper.paperTitle && ` - ${paper.paperTitle}` }</option>)}
         </Select>
-        
-        {currentPaper?.isEdited &&
-          <Box maxWidth='550px' mt={4} onClick={() => {}}>
-             <Title>{currentPaper?.paperTitle}</Title>
-            <RenderSvg image_data={currentPaper.metadata?.image_data} />
-            <Link href={getOpenseaURL(currentPaper)}
-                isExternal
-                lineHeight={10}
-                _hover={{
-                  color: "gray.300",
-                  textDecoration: "underline",
-                }}>
-                <LinkText>View on OpenSea</LinkText>
-            </Link>
-          </Box>
-        }
-
           <Box maxWidth="550px">
             <Input
               fontSize="14px"
@@ -196,7 +178,7 @@ const Write = () => {
             {!!resultMsg && <SubText>{resultMsg}</SubText>}
           </Box>
           <Box>BOX
-            <img width="500" src={svgImageSrc(makeSVG(['line 1', '   line 2']))} />
+            <img width="500" src={svgImageSrc(makeSVG(['line 1', '', '       line 3','...     ...  line 4']))} />
           </Box>
       </Layout>
   );
