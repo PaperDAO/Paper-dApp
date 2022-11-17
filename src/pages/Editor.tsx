@@ -2,7 +2,6 @@ import { useContext, useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { flatten } from 'lodash';
-import axios from 'axios';
 import { Box, Input, Select, Link, Textarea } from '@chakra-ui/react';
 import Layout from '../components/Layout';
 import {
@@ -17,6 +16,7 @@ import { getContract } from '../utils';
 import { AppContext, Paper } from '../Router';
 import type { TSignContact } from '../types';
 import '@fontsource/inter';
+import { getOpenseaURL, updateOpenseaMetadata } from '../helpers/opensea';
 
 const Title = styled.div`
     color: #cacbcc;
@@ -24,29 +24,6 @@ const Title = styled.div`
     font-weight: 700;
     text-align: center;
 `;
-
-function getOpenseaApiRequestURL(paper: Paper) {
-    const network = 'testnet';
-    const apiSubDomain = network === 'testnet' ? 'testnets-api' : 'api';
-
-    return `https://${apiSubDomain}.opensea.io/api/v1/asset/${process.env.REACT_APP_CONTRACT_ADDRESS}/${paper.id}/?force_update=true`;
-}
-
-function getOpenseaURL(paper: Paper) {
-    return `https://testnets.opensea.io/assets/rinkeby/${process.env.REACT_APP_CONTRACT_ADDRESS}/${paper.id}`;
-}
-
-async function updateOpenseanMetadata(paper: Paper | undefined) {
-    if (!paper) {
-        return;
-    }
-    const url = getOpenseaApiRequestURL(paper);
-    try {
-        await axios.get(url);
-    } catch (e) {
-        console.error(e);
-    }
-}
 
 const Editor = () => {
     const [value, setValue] = useState('');
@@ -97,7 +74,7 @@ const Editor = () => {
         await nftTx.wait(2);
         refetchAppData();
         refetchUserPapers();
-        updateOpenseanMetadata(currentPaper);
+        updateOpenseaMetadata(currentPaper);
         setMiningStatusMsg('');
         setResultMsg(`Written!`);
         setValue('');

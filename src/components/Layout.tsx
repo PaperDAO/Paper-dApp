@@ -16,36 +16,16 @@ import ConnectButton from '../components/ConnectButton';
 import closeIcon from '../media/close.svg';
 import menuIcon from '../media/menu.svg';
 import MarketLogos from '../components/MarketLogos';
+import NavLink from './NavLink';
 
 type Props = {
     children?: ReactNode;
 };
 
-type TNavLink = {
-    label: string;
-    link: string;
-    isVisible: boolean;
-};
-const NavLink = ({ label, link, isVisible }: TNavLink) =>
-    isVisible ? (
-        <Link
-            px={2}
-            py={1}
-            rounded={'md'}
-            _hover={{
-                textDecoration: 'none',
-                bg: useColorModeValue('gray.200', 'gray.700'),
-            }}
-            href={link}
-        >
-            {label}
-        </Link>
-    ) : null;
-
 export default function Layout({ children }: Props) {
     const { userPapers } = useContext(AppContext);
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const bgColor = useColorModeValue('gray.100', 'gray.400');
+    // const bgColor = useColorModeValue('gray.100', 'gray.400');
 
     const Links = [
         {
@@ -98,7 +78,7 @@ export default function Layout({ children }: Props) {
                 <HStack spacing={8} alignItems={'center'}>
                     <Box>
                         <Text color="gray.400" fontWeight="600">
-                            WhitePaperDAO
+                            <Link href={'/'}>WhitePaperDAO</Link>
                         </Text>
                     </Box>
                     <HStack

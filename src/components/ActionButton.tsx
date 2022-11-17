@@ -1,5 +1,4 @@
-import React from 'react';
-import { Button, Text } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 
 type ActionButtonProps = {
     handleAction?: any;
@@ -15,6 +14,7 @@ export default function ActionButton({
     return (
         <Button
             onClick={handleAction ? handleAction : () => {}}
+            width={width}
             fontSize="lg"
             fontWeight="bold"
             borderWidth="3px"
@@ -27,7 +27,6 @@ export default function ActionButton({
             size="lg"
             marginRight="20px"
             variant="outline"
-            width={width}
             color="gray.400"
             borderColor="gray.300"
         >
