@@ -148,10 +148,18 @@ const Write = () => {
                     _focus={{
                         borderColor: 'blue.100',
                     }}
-                    placeholder={'Paper title'}
+                    placeholder={'Title'}
                     onChange={(e: any) => setPageName(e.target.value)}
                 />
                 <Textarea
+                    placeholder="Text"
+                    value={value}
+                    onChange={(e: any) => setValue(e.target.value)}
+                    onKeyUp={(evt: any) => {
+                        let lineCount =
+                            evt.target.value.split(/\r\n|\r|\n/).length;
+                        setIsValid(lineCount <= MAX_LINES);
+                    }}
                     sx={{
                         color: 'gray.500',
                         backgroundImage: 'url(/images/whitepaper.svg)',
@@ -166,7 +174,6 @@ const Write = () => {
                         whiteSpace: 'pre-wrap',
                         borderColor: isValid ? 'inherit' : 'red',
                     }}
-                    value={value}
                     _hover={{
                         borderColor: 'blue.100',
                     }}
@@ -176,13 +183,6 @@ const Write = () => {
                     _focus={{
                         borderColor: 'blue.100',
                     }}
-                    onChange={(e: any) => setValue(e.target.value)}
-                    onKeyUp={(evt: any) => {
-                        let lineCount =
-                            evt.target.value.split(/\r\n|\r|\n/).length;
-                        setIsValid(lineCount <= MAX_LINES);
-                    }}
-                    placeholder="Text editor"
                 ></Textarea>
 
                 <Box>
