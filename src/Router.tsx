@@ -1,32 +1,29 @@
 import React from 'react';
 import  {request, gql} from "graphql-request"
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import Landing from './pages/Landing';
 import  Editor from './pages/Editor';
 import Collection from './pages/Collection';
-import { ethers } from "ethers";
-import detectEhereumProvider from "@metamask/detect-provider";
-import { useEthers } from "@usedapp/core";
+// import { ethers } from "ethers";
+// import { useEthers } from "@usedapp/core";
 import {AssetMetaData, getPaperMetadata} from "./utils";
+import Write from './pages/Write';
 
 
 const getConnectedAccount = async () => {
     const { ethereum } = window;
-
     if (ethereum) {
-        console.log('Got the ethereum obejct: ', ethereum)
+        console.log('Got the ethereum obejct: ', ethereum);
+        const accounts = await ethereum.request({ method: 'eth_accounts' })
+        if (accounts.length !== 0) {
+            console.warn('Found authorized Account: ', accounts[0])
+            return accounts[0];
+        } else {
+            console.log('No authorized account found');
+        }
     } else {
         console.log('No Wallet found. Connect Wallet')
-    }
-
-    const accounts = await ethereum.request({ method: 'eth_accounts' })
-
-    if (accounts.length !== 0) {
-        console.log('Found authorized Account: ', accounts[0])
-        return accounts[0];
-    } else {
-        console.log('No authorized account found')
     }
 }
 
@@ -78,21 +75,19 @@ const AppRoutes: any = () => {
                 }`,
             {
                 user
-            },);
+            },
+        );
 
-         let whitepapers = res.whitepapers;
-        whitepapers =  whitepapers.map((paper: Paper) => {
+        let whitepapers = res.whitepapers;
+        return whitepapers.map((paper: Paper) => {
             const metadata = getPaperMetadata(paper);
-
             return {
                 ...paper,
                 metadata: metadata || {}
             }
-        })
-
-
-        return whitepapers;
-    })
+        });
+    });
+    
     const {data: appData, refetch: refetchAppData} =  useQuery<AppData>('getAppData', async  () => {
         const res = await request(
             "https://api.thegraph.com/subgraphs/name/paperdao/whitepaper",
@@ -105,9 +100,7 @@ const AppRoutes: any = () => {
                 }`,
             );
         return res?.appData || {numEdited: 0, numMinted:0};
-
-    })
-
+    });
 
     return (
         <AppContext.Provider value={{userPapers: userPapers, refetchUserPapers, appData, refetchAppData}}>
@@ -119,6 +112,9 @@ const AppRoutes: any = () => {
                   <Route
                       path="/editor"
                       element={<Editor />} />
+                      <Route
+                      path="/write"
+                      element={<Write />} />
                   <Route
                       path="/collection"
                       element={<Collection />} />
