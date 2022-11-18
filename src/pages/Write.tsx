@@ -90,7 +90,6 @@ const Write = () => {
         <Layout>
             <Header>The Typewriter</Header>
             {/* <MintedText>{appData?.numEdited || 0}/10000 written</MintedText> */}
-
             <Box maxWidth="550px">
                 <Input
                     fontSize="14px"

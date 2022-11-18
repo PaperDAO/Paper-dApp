@@ -120,6 +120,7 @@ const Landing = () => {
             <Box maxWidth="250px" my="5">
                 <EmptyPage />
             </Box>
+            <Box></Box>
             <Flex paddingBottom="30px" mt="2" justifyContent="center">
                 {/* {!account && (
                     <Flex mt="2" marginRight="40px">

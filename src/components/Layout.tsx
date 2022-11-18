@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode, useContext } from 'react';
 import {
     Box,
     Flex,
@@ -26,7 +26,6 @@ export default function Layout({ children }: Props) {
     const { userPapers } = useContext(AppContext);
     const { isOpen, onOpen, onClose } = useDisclosure();
     // const bgColor = useColorModeValue('gray.100', 'gray.400');
-
     const Links = [
         {
             label: 'Mint',
