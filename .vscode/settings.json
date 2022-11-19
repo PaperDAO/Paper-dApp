@@ -1,0 +1,17 @@
+{
+    "prettier.configPath": ".prettierrc",
+    "editor.tabSize": 4,
+    "[sass][typescript]": {
+        "editor.tabSize": 4
+    },
+    "[html][javascript]": {
+        "editor.tabSize": 4
+    },
+    "editor.formatOnSave": true,
+    "eslint.alwaysShowStatus": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "typescript.format.insertSpaceAfterTypeAssertion": true,
+    "editor.detectIndentation": false
+}

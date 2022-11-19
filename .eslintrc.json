@@ -1,12 +1,11 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"],
-  "plugins": ["prettier"],
+  "plugins": ["react", "prettier"],
   "rules": {
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["off"]
   },
   "overrides": [
     {
-        "files": ["**/*.tsx","**/*.ts"],
+        "files": ["**/*.tsx"],
         "rules": {
             "react-hooks/exhaustive-deps": "off"
         }
