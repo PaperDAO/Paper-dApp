@@ -26,6 +26,7 @@ import {
 import { metamaskAppDeepLink } from '../config';
 import { MESSAGES, ROUTES } from './constants';
 import type { TSignContact } from '../types';
+import PapersGrid from '../components/PapersGrid';
 
 const Landing = () => {
     const [miningStatus, setMiningStatus] = useState(0);
@@ -114,13 +115,6 @@ const Landing = () => {
                 Eternalize your thoughts as NFTs. Mint a white paper and write
                 on it whatever you feel like.
             </Text>
-            {/* <MintedText>Minted {appData?.numMinted || 0}/ 10,000</MintedText> */}
-            {!!connectionMsg && <ErrorText>{connectionMsg}</ErrorText>}
-            {/* Empty white paper */}
-            <Box maxWidth="250px" my="5">
-                <EmptyPage />
-            </Box>
-            <Box></Box>
             <Flex paddingBottom="30px" mt="2" justifyContent="center">
                 {/* {!account && (
                     <Flex mt="2" marginRight="40px">
@@ -136,12 +130,13 @@ const Landing = () => {
                 {account && (
                     <Link
                         href="/write"
+                        pt="8"
                         _hover={{
                             textDecoration: 'none',
                         }}
                     >
                         <Button
-                            width="200px"
+                            width="420px"
                             fontSize="lg"
                             fontWeight="bold"
                             borderWidth="3px"
@@ -164,6 +159,25 @@ const Landing = () => {
                     </Link>
                 )}
             </Flex>
+            {/* <MintedText>Minted {appData?.numMinted || 0}/ 10,000</MintedText> */}
+            {!!connectionMsg && <ErrorText>{connectionMsg}</ErrorText>}
+            {/* Empty white paper */}
+            {/* <Box maxWidth="250px" my="5">
+                <EmptyPage />
+            </Box> */}
+            <Box>
+                <PapersGrid first={6}>
+                    <Link
+                        href="/collection"
+                        color="var(--chakra-colors-blue-300)"
+                        padding="auto auto 0 0"
+                        margin="auto auto 0 0"
+                    >
+                        Read More...
+                    </Link>
+                </PapersGrid>
+            </Box>
+
             <SubText>{MESSAGES.NO_HARM}</SubText>
             <Box textAlign="center" mt="10">
                 {!account &&

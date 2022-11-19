@@ -1,4 +1,3 @@
-import React from 'react';
 import AppRoutes from './Router';
 import '@fontsource/inter';
 import { QueryClient, QueryClientProvider } from 'react-query';

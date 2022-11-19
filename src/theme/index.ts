@@ -5,4 +5,7 @@ export default extendTheme({
         heading: "Inter",
         body: "Inter",
     },
+    a: {
+        color: "var(--chakra-colors-blue-300)",
+    },
 });

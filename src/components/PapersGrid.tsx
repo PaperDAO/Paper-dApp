@@ -5,7 +5,11 @@ import usePapers from '../hooks/usePapers';
 import PaperModal from './PaperModal';
 import { SubTextLfSm } from './Typography';
 
-export default function PapersGrid({ first = 12 }): JSX.Element {
+export default function PapersGrid({
+    first = 12,
+    skip = 0,
+    children,
+}: any): JSX.Element {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedSvg, setSelectedSvg] = useState('');
     const [selectedItem, setSelectedItem] = useState('');
@@ -46,7 +50,7 @@ export default function PapersGrid({ first = 12 }): JSX.Element {
                                 return (
                                     <Box
                                         key={index}
-                                        w="250px"
+                                        minWidth="250px"
                                         pt={2}
                                         onClick={() =>
                                             onModalOpen(item, base64data)
@@ -67,6 +71,7 @@ export default function PapersGrid({ first = 12 }): JSX.Element {
                             }
                         },
                     )}
+                    {children}
                 </SimpleGrid>
             )}
             <PaperModal
