@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Box, Text } from '@chakra-ui/react';
 import { useEthers, useEtherBalance } from '@usedapp/core';
 import { formatEther } from '@ethersproject/units';
+import { sliceAccount } from '../utils';
 
 type Props = {
     handleOpenModal?: any;
@@ -49,11 +50,7 @@ export default function ConnectButton({ handleOpenModal }: Props) {
                 height="38px"
             >
                 <Text color="white" fontSize="md" fontWeight="medium" mr="2">
-                    {account &&
-                        `${account.slice(0, 6)}...${account.slice(
-                            account.length - 4,
-                            account.length,
-                        )}`}
+                    {sliceAccount(account)}
                 </Text>
             </Button>
         </Box>

@@ -119,11 +119,7 @@ const Landing = () => {
                 {/* {!account && (
                     <Flex mt="2" marginRight="40px">
                         <ChackraText color="gray.400" marginRight="5px">
-                            {account &&
-                                `${account.slice(0, 6)}...${account.slice(
-                                    account.length - 4,
-                                    account.length,
-                                )}`}
+                            {sliceAccount(account)}
                         </ChackraText>
                     </Flex>
                 )} */}

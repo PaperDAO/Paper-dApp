@@ -5,6 +5,16 @@ import {Paper} from "./Router";
 // @ts-ignore
 import base64 from "base-64";
 
+export const sliceAccount = (account: any) => {
+    return (
+        account &&
+        `${account.slice(0, 6)}...${account.slice(
+            account.length - 4,
+            account.length,
+        )}`
+    );
+};
+
 // Checks if wallet is connected to the correct network
 export const checkCorrectNetwork = async () => {
 	const { ethereum } = window;

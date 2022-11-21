@@ -6,17 +6,6 @@ import PapersGrid from '../components/PapersGrid';
 
 const Collection: any = () => {
     // const { account, deactivate } = useEthers();
-
-    const sliceAccount = (account: any) => {
-        return (
-            account &&
-            `${account.slice(0, 6)}...${account.slice(
-                account.length - 4,
-                account.length,
-            )}`
-        );
-    };
-
     return (
         <Layout>
             <Header>White Paper Collection</Header>
