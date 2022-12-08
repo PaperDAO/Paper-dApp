@@ -4,6 +4,7 @@ import NFT from './abi/paper721.json';
 import {Paper} from "./Router";
 // @ts-ignore
 import base64 from "base-64";
+import { AssetMetaData } from './types';
 
 export const sliceAccount = (account: any) => {
     return (
@@ -26,6 +27,9 @@ export const checkCorrectNetwork = async () => {
 	return chainId === process.env.REACT_APP_NETWORK_ID;
 }
 
+/** [DEPRECATE] use Hook instead
+ * 
+ */
 export async function getContract(){
 	//Vadliate
     if(!process.env.REACT_APP_CONTRACT_ADDRESS) throw new Error("Missing ENV:CONTRACT_ADDRESS")
@@ -38,11 +42,6 @@ export async function getContract(){
 		signer
 	)
 	return { signer, nftContract }
-}
-
-export interface AssetMetaData {
-	image_data: string;
-	name: string;
 }
 
 export function getPaperMetadata(paper: Paper): AssetMetaData | {} {

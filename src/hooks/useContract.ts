@@ -9,10 +9,20 @@ import NFT from '../abi/paper721.json';
 export default function useContract() {
   const [contract, setContract] = useState<any>(null);
   
+  /// Validation
+  function validate() {
+    // if (isNetworkChainIdCorrect === null) throw new NoWalletError();
+    // if (!isNetworkChainIdCorrect) throw new WrongNetworkError();
+  }
+
   const getContract = async (): Promise<any> => {
+    validate();
     //Vadliate
     if(!process.env.REACT_APP_CONTRACT_ADDRESS) throw new Error("Missing ENV:CONTRACT_ADDRESS")
-    const provider:any  = await detectEhereumProvider();
+    
+    //TODO: This should go on Context and this functions shouldn't be Async! 
+    const provider:any  = await detectEhereumProvider();    
+
     const ethProvider =  new ethers.providers.Web3Provider(provider)
     const signer: ethers.Signer = ethProvider.getSigner()
     return new ethers.Contract(

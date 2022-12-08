@@ -50,7 +50,7 @@ export default function PapersGrid({
                                 return (
                                     <Box
                                         key={index}
-                                        minWidth="250px"
+                                        // minWidth="250px"
                                         pt={2}
                                         onClick={() =>
                                             onModalOpen(item, base64data)

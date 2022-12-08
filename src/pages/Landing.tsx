@@ -25,7 +25,7 @@ import {
 } from '../utils';
 import { metamaskAppDeepLink } from '../config';
 import { MESSAGES, ROUTES } from './constants';
-import type { TSignContact } from '../types';
+// import type { TSignContact } from '../types';
 import PapersGrid from '../components/PapersGrid';
 
 const Landing = () => {
@@ -70,8 +70,8 @@ const Landing = () => {
         }
     };
 
-    // Creates transaction to mint NFT on clicking Mint Character button
-    const mintCharacter = async () => {
+    /* Creates transaction to mint NFT on clicking Mint Character button
+    const mintNFT = async () => {
         setMiningStatus(0);
 
         try {
@@ -105,7 +105,7 @@ const Landing = () => {
             // setTxError(error.message)
         }
     };
-
+    */
     return (
         <Layout>
             <Header>White Paper</Header>
@@ -157,10 +157,6 @@ const Landing = () => {
             </Flex>
             {/* <MintedText>Minted {appData?.numMinted || 0}/ 10,000</MintedText> */}
             {!!connectionMsg && <ErrorText>{connectionMsg}</ErrorText>}
-            {/* Empty white paper */}
-            {/* <Box maxWidth="250px" my="5">
-                <EmptyPage />
-            </Box> */}
             <Box>
                 <PapersGrid first={6}>
                     <Link
